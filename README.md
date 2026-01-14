@@ -1,5 +1,5 @@
-#Project Proposal: EdgeGuard Hybrid Intelligence
-##Date: January 13, 2026 Course: CS 362
+# Project Proposal: EdgeGuard Hybrid Intelligence
+## Date: January 13, 2026 Course: CS 362
 
 1. Team Info
 Team Members & Roles
@@ -12,7 +12,7 @@ Team Members & Roles
 
 [Member 4 Name]: Role
 
-##Project Artifacts
+## Project Artifacts
 
 Code Repository: [Link to your GitHub Repo] (e.g., https://github.com/3EEEs/EdgeGuard)
 
@@ -22,7 +22,7 @@ Communication Plan
 
 Channels: Discord for daily synchronous chat; GitHub Issues for task tracking; Weekly meeting after class and as needed.
 
-##Rules:
+## Rules:
 
 All code changes must go through a Pull Request with at least one review.
 
