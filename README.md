@@ -17,7 +17,7 @@ Project Board: [Github Project](https://github.com/users/3EEEs/projects/2/views/
 
 ## Communication Plan
 
-Channels: Discord for daily synchronous chat; GitHub Issues for task tracking; Weekly meeting after class and as needed.
+Channels: Discord and text groupchat for daily synchronous chat; GitHub Issues for task tracking; Weekly meeting after class and as needed.
 
 ## Rules:
 * All code changes must go through a Pull Request with at least one review.
@@ -36,3 +36,11 @@ Channels: Discord for daily synchronous chat; GitHub Issues for task tracking; W
 ## Stretch Goals
 * Cost-Savings Calculator: A visualization on the dashboard comparing "Estimated Cost if Full Streaming" vs. "Actual Cost with EdgeGuard," using live AWS pricing data.
 * SMS/Email Alerts: Integration with AWS SNS (Simple Notification Service) to text the user immediately when a specific "High Threat" object (e.g., a person at night) is confirmed by the cloud.
+
+## Other Ideas
+* Running app: Make a running app that allows the user to help make workout paces for the user based on what they want to do. This would be useful with all runners by making it easier for people with different paces to get the exact pace that they should be running
+* Guitar Idea: Make an ai that reads music and writes it into the app. Then the app would have recorded videos of each note on a guitar to help with fingering. It would play a clip of ethan playing the guitar at each note when the note hits. You can change tempo, and it would play the song with clips of Ethan playing combined
+* Motion Detection: check to see movement in frames, and then send it to amazon to figure out what moved, and provide a cheaper process than others availiable
+* Worship night: have an app to help work with schedules and visualize who is playing what on what day
+* Losing Tickets: make a system that fixes that by making a better ticketing system with an interface that connects to a new ticket system that makes it easier to track status on a ticket, and what computers are linked to the ticket, and who is working on the ticket.
+* 
