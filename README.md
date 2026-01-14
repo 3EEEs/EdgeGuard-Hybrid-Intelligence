@@ -4,10 +4,10 @@
 1. Team Info
 
 Team Members & Roles
-* Member 1 - Ethan Short: Role
-* Member 2 - Calvin Grabowski: Role
-* Member 3 - Michael Wilde: Role
-* Member 4 - Samuel Dressel: Role
+* Member 1 - Ethan Short: Motion Detection Lead
+* Member 2 - Calvin Grabowski: API and Cloud Interation Lead
+* Member 3 - Michael Wilde: Video Processing Lead
+* Member 4 - Samuel Dressel: Motion Detection and Storage Optimizion Lead
 
 ## Project Artifacts
 
