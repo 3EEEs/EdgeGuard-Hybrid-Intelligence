@@ -2,8 +2,8 @@
 ## Date: January 13, 2026 Course: CS 362
 
 1. Team Info
-Team Members & Roles
 
+Team Members & Roles
 * Member 1 - Ethan Short: Role
 * Member 2 - Name: Role
 * Member 3 - Name: Role
