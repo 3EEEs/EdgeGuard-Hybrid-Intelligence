@@ -26,6 +26,8 @@ Channels: Discord and text groupchat for daily synchronous chat; GitHub Issues f
 
 2. Product Description
 
+* Goal: Takes snippets of movement from a video and saves those snippets. This saves total storage, saves money by making our customers not having to submit as much to amazon rekognition, and it makes it easier for humans to go through the snippets. Our product would send only exact frames or small clips to amazon rekognition to save money, by sending less frames than other services and less expensive than other options.
+
 3. Project Scope
 ## Major Features
 * Local Motion "Gatekeeper": A Python application that reads a webcam feed and successfully filters out static backgrounds, triggering only on significant movement.
@@ -43,4 +45,3 @@ Channels: Discord and text groupchat for daily synchronous chat; GitHub Issues f
 * Motion Detection: check to see movement in frames, and then send it to amazon to figure out what moved, and provide a cheaper process than others availiable
 * Worship night: have an app to help work with schedules and visualize who is playing what on what day
 * Losing Tickets: make a system that fixes that by making a better ticketing system with an interface that connects to a new ticket system that makes it easier to track status on a ticket, and what computers are linked to the ticket, and who is working on the ticket.
-* 
