@@ -14,7 +14,7 @@ Team Members & Roles
 
 ## Project Artifacts
 
-Code Repository: [Link to your GitHub Repo] (e.g., https://github.com/3EEEs/EdgeGuard)
+Code Repository: [Link to your GitHub Repo] (e.g., https://github.com/3EEEs/EdgeGuard-Hybrid-Intelligence)
 
 Project Board: Github Projects or Trello
 
