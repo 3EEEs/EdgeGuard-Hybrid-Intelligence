@@ -14,9 +14,9 @@ Team Members & Roles
 
 ## Project Artifacts
 
-Code Repository: https://github.com/3EEEs/EdgeGuard-Hybrid-Intelligence
+Code Repository: [Link](https://github.com/3EEEs/EdgeGuard-Hybrid-Intelligence)
 
-Project Board: [Github Projects or Trello](https://github.com/users/3EEEs/projects/2/views/1)
+Project Board: [Github Project](https://github.com/users/3EEEs/projects/2/views/1)
 
 ## Communication Plan
 
