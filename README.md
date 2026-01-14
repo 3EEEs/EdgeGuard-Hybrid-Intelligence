@@ -5,7 +5,7 @@
 
 Team Members & Roles
 * Member 1 - Ethan Short: Role
-* Member 2 - Name: Role
+* Member 2 - Calvin Grabowski: Role
 * Member 3 - Name: Role
 * Member 4 - Name: Role
 
