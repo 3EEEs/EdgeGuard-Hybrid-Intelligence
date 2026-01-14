@@ -24,16 +24,15 @@ Channels: Discord and text groupchat for daily synchronous chat; GitHub Issues f
 * "Blockers" must be communicated in Discord immediately.
 * Response time expectation: Within 24 hours on weekdays.
 
-2. Product Description
+## Product Description
 
-* Goal: Takes snippets of movement from a video and saves those snippets. This saves total storage, saves money by making our customers not having to submit as much to amazon rekognition, and it makes it easier for humans to go through the snippets. Our product would send only exact frames or small clips to amazon rekognition to save money, by sending less frames than other services and less expensive than other options.
-* Current Practice: Most video surveillance and monitoring systems rely on continuous recording or full video streaming to the cloud, where all footage is stored and analyzed. This approach results in high storage costs, excessive cloud processing fees, and large volumes of irrelevant footage that users must manually review.
-* Novelty: Our approach shifts decision-making to the edge by filtering video locally and sending only meaningful motion-based snippets to the cloud. Rather than continuously uploading footage, the system selectively transmits exact frames or short clips for AI analysis, significantly reducing cloud usage and cost while maintaining useful detection accuracy.
-* Effects: If successful, the system will reduce data storage and cloud processing costs for individuals and organizations, making intelligent video monitoring more affordable. It also improves usability by allowing users to review only relevant events instead of hours of uneventful footage.
-* Technical Approach: A local Python application performs motion detection on a webcam feed and captures only significant movement. These frames are uploaded to AWS S3, processed by an AWS Lambda function using Amazon Rekognition, and displayed through a web-based dashboard with optional real-time alerts via AWS SNS.
-* Risks: The most significant risk is inaccurate motion detection at the edge, which could cause unnecessary uploads or missed events. This will be mitigated through adaptive motion thresholds, background subtraction, and filtering to ensure that only meaningful motion triggers cloud processing.
+* **Goal:** Takes snippets of movement from a video and saves those snippets. This saves total storage, saves money by making our customers not having to submit as much to amazon rekognition, and it makes it easier for humans to go through the snippets. Our product would send only exact frames or small clips to amazon rekognition to save money, by sending less frames than other services and less expensive than other options.
+* **Current Practice:** Most video surveillance and monitoring systems rely on continuous recording or full video streaming to the cloud, where all footage is stored and analyzed. This approach results in high storage costs, excessive cloud processing fees, and large volumes of irrelevant footage that users must manually review.
+* **Novelty:** Our approach shifts decision-making to the edge by filtering video locally and sending only meaningful motion-based snippets to the cloud. Rather than continuously uploading footage, the system selectively transmits exact frames or short clips for AI analysis, significantly reducing cloud usage and cost while maintaining useful detection accuracy.
+* **Effects:** If successful, the system will reduce data storage and cloud processing costs for individuals and organizations, making intelligent video monitoring more affordable. It also improves usability by allowing users to review only relevant events instead of hours of uneventful footage.
+* **Technical Approach:** A local Python application performs motion detection on a webcam feed and captures only significant movement. These frames are uploaded to AWS S3, processed by an AWS Lambda function using Amazon Rekognition, and displayed through a web-based dashboard with optional real-time alerts via AWS SNS.
+* **Risks:** The most significant risk is inaccurate motion detection at the edge, which could cause unnecessary uploads or missed events. This will be mitigated through adaptive motion thresholds, background subtraction, and filtering to ensure that only meaningful motion triggers cloud processing.
 
-3. Project Scope
 ## Major Features
 * Local Motion "Gatekeeper": A Python application that reads a webcam feed and successfully filters out static backgrounds, triggering only on significant movement.
 * Cloud Integration Pipeline: Automatic secure upload of captured frames to an AWS S3 bucket using the Boto3 SDK.
