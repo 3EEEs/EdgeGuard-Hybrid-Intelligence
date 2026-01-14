@@ -14,11 +14,11 @@ Team Members & Roles
 
 ## Project Artifacts
 
-Code Repository: [Link to your GitHub Repo] (e.g., https://github.com/3EEEs/EdgeGuard-Hybrid-Intelligence)
+Code Repository: https://github.com/3EEEs/EdgeGuard-Hybrid-Intelligence
 
 Project Board: Github Projects or Trello
 
-Communication Plan
+## Communication Plan
 
 Channels: Discord for daily synchronous chat; GitHub Issues for task tracking; Weekly meeting after class and as needed.
 
