@@ -10,6 +10,8 @@
 
 Most current video surveillance systems rely on continuous recording or full video streaming to the cloud, resulting in high storage costs and excessive processing fees. Our solution shifts decision-making to the local device. By integrating motion-triggered capture with **Amazon Rekognition**, the system identifies specific entities (such as people, animals, or objects) and ignores environmental noise.
 
+### [Living Document] (https://github.com/3EEEs/EdgeGuard-Hybrid-Intelligence/blob/main/LIVINGDOC.md)
+
 ### Core Goals
 1.  **Cost Reduction:** Minimize cloud storage and processing fees by only transmitting exact frames or short clips of relevant motion.
 2.  **Efficiency:** Reduce the time users spend reviewing raw footage by providing actionable, filtered data.
