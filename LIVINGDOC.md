@@ -34,7 +34,7 @@ Channels: Discord and text groupchat for daily synchronous chat; GitHub Issues f
 
 * **Current Practice:** Most video surveillance and monitoring systems rely on continuous recording or full video streaming to the cloud, where all footage is stored and analyzed. This approach results in high storage costs, excessive cloud processing fees, and large volumes of irrelevant footage that users must manually review.
 
-* **Novelty:** Our approach shifts decision-making to the edge by filtering video locally and sending only meaningful motion-based snippets to the cloud. Rather than continuously uploading footage, the system selectively transmits exact frames or short clips for AI analysis, significantly reducing cloud usage and cost while maintaining useful detection accuracy.
+* **Novelty:** Our approach shifts decision-making to the edge by filtering video locally and sending only meaningful motion-based snippets to the cloud. Rather than continuously uploading footage, the system selectively transmits exact frames or short clips for AI analysis, significantly reducing cloud usage and cost while maintaining useful detection accuracy. Unlike traditional smart camera systems that rely on constant cloud streaming, this project emphasizes edge filtering that prioritizes cloud usage only when meaningful events occur to reduce unnecessary costs.
 
 * **Effects:** If successful, the system will reduce data storage and cloud processing costs for individuals and organizations, making intelligent video monitoring more affordable. It also improves usability by allowing users to review only relevant events instead of hours of uneventful footage.
 
