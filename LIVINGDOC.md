@@ -38,9 +38,9 @@ Channels: Discord and text groupchat for daily synchronous chat; GitHub Issues f
 
 * **Effects:** If successful, the system will reduce data storage and cloud processing costs for individuals and organizations, making intelligent video monitoring more affordable. It also improves usability by allowing users to review only relevant events instead of hours of uneventful footage.
 
-* **Use Cases (Functional Requirements):**
+---
 
-1. Use Cases (Functional Requirements)
+* **Use Cases (Functional Requirements):**
 
 Use Case 1: Filtered Security Monitoring (Ethan Short)
 * Actors: Homeowner (Primary), Camera (Hardware), AWS Rekognition (System).
@@ -58,6 +58,26 @@ List of Steps:
 * Extensions/Variations: If the label is "Animal," the system logs it but does not trigger a high-priority alert.
 * Exceptions: Camera disconnected (System logs a local error); AWS API timeout (System retries upload once).
 
+
+
+
+Use Case 2: Wild Life Detection (Calvin Grabowski)
+* Actors: Amazon Rekognition + Camera + Live video feed
+* Triggers: The animals of choice that the user inputs
+* Preconditions: live video feed; internet connection; long battery life or plugged in to some electricity storage; camera looks over the desired area from above; Connected to user's phone for notifications
+* Postconditions: Notification sent; Video feed sent
+
+List of steps:
+1. Live feed is running
+2. Animal walks in frame
+3. Camera clips the motion and sends to amazon Rekognition services
+4. Animal is recognized and clip is saved
+5. User is notified
+* Extensions/Variations: Alerts can be sent to multiple accounts; Alerts can be sent in through different ways: an app, text/sms, email, etc.; If it detects any animal it would save it, not be a high prior
+* Exceptions: Camera cannot see the animal (in the dark with no light); Camera's vision gets blocked (perhaps a leaf falls on it)
+
+
+---
 * **Non-functional Requirements:**
 1. Latency: The time from motion detection to the cloud-processed label appearing on the dashboard should be under 10 seconds.
 2. Usability: The web dashboard must be responsive and viewable on both desktop and mobile browsers.
