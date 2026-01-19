@@ -3,8 +3,8 @@
 
 
 ### Team Info
-* Ethan Short – Motion Detection Lead
-* Calvin Grabowski – API and Cloud Integration Lead
+* Ethan Short – API and Cloud Integration
+* Calvin Grabowski – Lead Motion Detection Lead
 * Michael Wilde – Video Processing Lead
 * Samuel Dressel – Motion Detection and Storage Optimization Lead
 
@@ -97,8 +97,8 @@ List of steps:
 ### Phase 1: Foundation & Infrastructure (Weeks 1-3)
 #### Week 1 (Jan 12 - Jan 18)
 Goal: Repository setup and initial motion prototyping.
-- [ ] Ethan: Implement basic OpenCV frame-differencing script that saves a .jpg locally when motion is detected.
-- [ ] Calvin: Set up AWS account and IAM users with S3/Rekognition permissions for all team members.
+- [ ] Calvin: Implement basic OpenCV frame-differencing script that saves a .jpg locally when motion is detected.
+- [ ] Ethan: Set up AWS account and IAM users with S3/Rekognition permissions for all team members.
 
 #### Week 2 (Jan 19 - Jan 25)
 Goal: Class presentation and Cloud connectivity.
