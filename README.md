@@ -23,10 +23,14 @@ Most current video surveillance systems rely on continuous recording or full vid
 
 | Name | Role | GitHub Username |
 | :--- | :--- | :--- |
-| **Ethan Short** | Motion Detection Lead | TBD |
-| **Calvin Grabowski** | API & Cloud Interaction Lead | TBD |
-| **Michael Wilde** | Video Processing Lead | TBD |
-| **Samuel Dressel** | Motion Detection & Storage Optimization Lead | TBD |
+| **Ethan Short** | Motion Detection Lead | 3EEEs |
+| **Calvin Grabowski** | API & Cloud Interaction Lead | CalvinGrabowski |
+| **Michael Wilde** | Video Processing Lead | LegendaryGitHub |
+| **Samuel Dressel** | Motion Detection & Storage Optimization Lead | Voidless-Void |
+
+
+
+
 
 ---
 
