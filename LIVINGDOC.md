@@ -91,8 +91,13 @@ List of steps:
 
 * **Risks:** The most significant risk is inaccurate motion detection at the edge, which could cause unnecessary uploads or missed events. This will be mitigated through adaptive motion thresholds, background subtraction, and filtering to ensure that only meaningful motion triggers cloud processing.
 
-* **Time Line:**
+* **Team Roles & Justification**
+* Ethan Short (Cloud Lead): Responsible for AWS architecture and Database integrity. Chosen for ability to manage secure API keys and cloud permissions.
+* Calvin Grabowski (Motion Lead): Responsible for the "Edge" logic. Chosen for interest in computer vision and local Python optimization.
+* Michael Wilde (Integration Lead): Responsible for connecting the Edge to the Cloud and UI. Chosen for full-stack experience and AWS SDK familiarity.
+* Samuel Dressel (Optimization Lead): Responsible for filtering logic and noise reduction. Chosen for focus on software robustness and reducing "False Positives."
 
+* **Time Line:**
 ### Phase 1: Foundation & Infrastructure (Weeks 1-3)
 #### Week 1 (Jan 12 - Jan 18)
 Goal: Repository setup and initial motion prototyping.
@@ -140,11 +145,6 @@ Goal: Stretch Goals & Refinement.
 Goal: Final Documentation & Video Demo.
 - [ ] Entire Team: Complete the README.md with installation instructions.
 - [ ] Entire Team: Finalize the living document and record a 5-minute project demo video.
-
-Ethan Short (Cloud Lead): Responsible for AWS architecture and Database integrity. Chosen for ability to manage secure API keys and cloud permissions.
-Calvin Grabowski (Motion Lead): Responsible for the "Edge" logic. Chosen for interest in computer vision and local Python optimization.
-Michael Wilde (Integration Lead): Responsible for connecting the Edge to the Cloud and UI. Chosen for full-stack experience and AWS SDK familiarity.
-Samuel Dressel (Optimization Lead): Responsible for filtering logic and noise reduction. Chosen for focus on software robustness and reducing "False Positives."
 
 ## Major Features
 * Local Motion "Gatekeeper": A Python application that reads a webcam feed and successfully filters out static backgrounds, triggering only on significant movement.
