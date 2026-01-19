@@ -44,7 +44,7 @@ Channels: Discord and text groupchat for daily synchronous chat; GitHub Issues f
 
 * **External Requirements:**
 
-* **Technical Approach:** A local Python application performs motion detection on a webcam feed and captures only significant movement. These frames are uploaded to AWS S3, processed by an AWS Lambda function using Amazon Rekognition, and displayed through a web-based dashboard with optional real-time alerts via AWS SNS.
+* **Technical Approach:** A local Python application performs motion detection on a webcam feed and captures only significant movement using frame differences. When the frames change the frames will be pinged. These frames are uploaded to AWS S3, processed by an AWS Lambda function using Amazon Rekognition, and displayed through a web-based dashboard with optional real-time alerts via AWS SNS.
 
 * **Risks:** The most significant risk is inaccurate motion detection at the edge, which could cause unnecessary uploads or missed events. This will be mitigated through adaptive motion thresholds, background subtraction, and filtering to ensure that only meaningful motion triggers cloud processing.
 
