@@ -25,6 +25,7 @@ Channels: Discord and text groupchat for daily synchronous chat; GitHub Issues f
 * All code changes must go through a Pull Request with at least one review.
 * "Blockers" must be communicated in Discord immediately.
 * Response time expectation: Within 24 hours on weekdays.
+* Weekly project reports due between Friday - Sunday of every week. Rotation Ethan, Calvin, Samuel, Michael
 
 ## Product Description
 
