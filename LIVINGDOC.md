@@ -1,5 +1,5 @@
 # Project Proposal: EdgeGuard Hybrid Intelligence
-## Date: January 13, 2026 Course: CS 362
+## Date: January 19, 2026 Course: CS 362
 
 
 ### Team Info
@@ -16,6 +16,8 @@ Code Repository: [Link](https://github.com/3EEEs/EdgeGuard-Hybrid-Intelligence)
 Project Board: [Github Project](https://github.com/users/3EEEs/projects/2/views/1)
 
 Google Doc: [Project Deliverable 1](https://docs.google.com/presentation/d/1xFujLNTsQRAWX66ZN-khSHP7Vj1CQskHdH3TL1hhviU/edit)
+
+Report Format: [Link](https://canvas.oregonstate.edu/courses/2026970/assignments/10302739)
 
 ## Communication Plan
 
