@@ -40,9 +40,33 @@ Channels: Discord and text groupchat for daily synchronous chat; GitHub Issues f
 
 * **Use Cases (Functional Requirements):**
 
+1. Use Cases (Functional Requirements)
+
+Use Case 1: Filtered Security Monitoring (Ethan Short)
+* Actors: Homeowner (Primary), Camera (Hardware), AWS Rekognition (System).
+* Triggers: Local computer detects pixel variance (motion) in the camera feed.
+* Preconditions: Camera is active; Python script is running; Internet connection is stable.
+* Postconditions: A filtered image is stored in AWS S3 and visible on the dashboard with a "Person" label.
+
+List of Steps:
+1. System monitors live video feed locally.
+2. System detects motion exceeding the sensitivity threshold.
+3. System captures a frame and sends it to AWS Rekognition.
+4. Rekognition returns "Person" label.
+5. System saves the image and metadata to the Cloud Database.
+
+* Extensions/Variations: If the label is "Animal," the system logs it but does not trigger a high-priority alert.
+* Exceptions: Camera disconnected (System logs a local error); AWS API timeout (System retries upload once).
+
 * **Non-functional Requirements:**
+1. Latency: The time from motion detection to the cloud-processed label appearing on the dashboard should be under 10 seconds.
+2. Usability: The web dashboard must be responsive and viewable on both desktop and mobile browsers.
+3. Efficiency: The local Python application should consume less than 15% of the CPU on a standard laptop to ensure it can run in the background.
 
 * **External Requirements:**
+1. AWS Connectivity: The system requires a stable internet connection to communicate with AWS S3 and Rekognition.
+2. Hardware: A 720p or higher USB webcam or integrated laptop camera is required for sufficient image clarity for AI analysis.
+3. API Limits: The system must stay within the AWS Free Tier or the user’s specified budget for Rekognition API calls.
 
 * **Technical Approach:** A local Python application performs motion detection on a webcam feed and captures only significant movement using frame differences. When the frames change the frames will be pinged. These frames are uploaded to AWS S3, processed by an AWS Lambda function using Amazon Rekognition, and displayed through a web-based dashboard with optional real-time alerts via AWS SNS.
 
