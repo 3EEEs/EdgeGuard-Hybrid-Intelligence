@@ -15,6 +15,8 @@ Code Repository: [Link](https://github.com/3EEEs/EdgeGuard-Hybrid-Intelligence)
 
 Project Board: [Github Project](https://github.com/users/3EEEs/projects/2/views/1)
 
+Google Doc: [Project Deliverable 1](https://docs.google.com/presentation/d/1xFujLNTsQRAWX66ZN-khSHP7Vj1CQskHdH3TL1hhviU/edit)
+
 ## Communication Plan
 
 Channels: Discord and text groupchat for daily synchronous chat; GitHub Issues for task tracking; Weekly meeting after class and as needed.
