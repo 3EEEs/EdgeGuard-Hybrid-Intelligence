@@ -47,6 +47,8 @@ Use Case 1: Filtered Security Monitoring (Ethan Short)
 * Triggers: Local computer detects pixel variance (motion) in the camera feed.
 * Preconditions: Camera is active; Python script is running; Internet connection is stable.
 * Postconditions: A filtered image is stored in AWS S3 and visible on the dashboard with a "Person" label.
+* Extensions/Variations: If the label is "Animal," the system logs it but does not trigger a high-priority alert.
+* Exceptions: Camera disconnected (System logs a local error); AWS API timeout (System retries upload once).
 
 List of Steps:
 1. System monitors live video feed locally.
@@ -54,9 +56,6 @@ List of Steps:
 3. System captures a frame and sends it to AWS Rekognition.
 4. Rekognition returns "Person" label.
 5. System saves the image and metadata to the Cloud Database.
-
-* Extensions/Variations: If the label is "Animal," the system logs it but does not trigger a high-priority alert.
-* Exceptions: Camera disconnected (System logs a local error); AWS API timeout (System retries upload once).
 
 
 
@@ -66,6 +65,8 @@ Use Case 2: Wild Life Detection (Calvin Grabowski)
 * Triggers: The animals of choice that the user inputs
 * Preconditions: live video feed; internet connection; long battery life or plugged in to some electricity storage; camera looks over the desired area from above; Connected to user's phone for notifications
 * Postconditions: Notification sent; Video feed sent
+* Extensions/Variations: Alerts can be sent to multiple accounts; Alerts can be sent in through different ways: an app, text/sms, email, etc.; If it detects any animal it would save it, not be a high prior
+* Exceptions: Camera cannot see the animal (in the dark with no light); Camera's vision gets blocked (perhaps a leaf falls on it)
 
 List of steps:
 1. Live feed is running
@@ -73,8 +74,6 @@ List of steps:
 3. Camera clips the motion and sends to amazon Rekognition services
 4. Animal is recognized and clip is saved
 5. User is notified
-* Extensions/Variations: Alerts can be sent to multiple accounts; Alerts can be sent in through different ways: an app, text/sms, email, etc.; If it detects any animal it would save it, not be a high prior
-* Exceptions: Camera cannot see the animal (in the dark with no light); Camera's vision gets blocked (perhaps a leaf falls on it)
 
 
 ---
