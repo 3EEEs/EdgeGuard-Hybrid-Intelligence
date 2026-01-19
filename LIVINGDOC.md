@@ -93,7 +93,55 @@ List of steps:
 * **Risks:** The most significant risk is inaccurate motion detection at the edge, which could cause unnecessary uploads or missed events. This will be mitigated through adaptive motion thresholds, background subtraction, and filtering to ensure that only meaningful motion triggers cloud processing.
 
 * **Time Line:**
-  
+
+### Phase 1: Foundation & Infrastructure (Weeks 1-3)
+#### Week 1 (Jan 12 - Jan 18)
+Goal: Repository setup and initial motion prototyping.
+- [ ] Ethan: Implement basic OpenCV frame-differencing script that saves a .jpg locally when motion is detected.
+- [ ] Calvin: Set up AWS account and IAM users with S3/Rekognition permissions for all team members.
+
+#### Week 2 (Jan 19 - Jan 25)
+Goal: Class presentation and Cloud connectivity.
+- [ ] Michael: Create a Python script using boto3 that successfully uploads a test file to an S3 bucket.
+- [ ] Samuel: Implement a "Cooldown" timer in the local script to prevent 100 images from being captured in 1 second.
+
+#### Week 3 (Jan 26 - Feb 1)
+Goal: First "End-to-End" test (Local to Cloud).
+- [ ] Ethan: Integrate the S3 upload script into the motion detection loop.
+- [ ] Calvin: Create an AWS Lambda trigger that runs whenever a new image hits the S3 bucket.
+
+### Phase 2: Core Intelligence (Weeks 4-6)
+#### Week 4 (Feb 2 - Feb 8)
+Goal: AI Labeling.
+- [ ] Michael: Write the Lambda function code to call Amazon Rekognition and print detected labels to the console.
+- [ ] Samuel: Research and implement "Background Subtraction" (MOG2) to improve motion accuracy over simple differencing.
+
+#### Week 5 (Feb 9 - Feb 15)
+Goal: Database & Dashboard Start.
+- [ ] Calvin: Set up a DynamoDB table to store metadata (Timestamp, S3 URL, AI Labels).
+- [ ] Ethan: Create a basic Flask or React frontend that displays a "Hello World" list of items from DynamoDB.
+
+#### Week 6 (Feb 16 - Feb 22)
+Goal: Dashboard Visualization.
+- [ ] Michael: Build the UI component to display the actual captured images alongside their AI tags.
+- [ ] Samuel: Add "Sensitivity" sliders to the local Python app to allow user-defined motion thresholds.
+
+### Phase 3: Optimization & Delivery (Weeks 7-9)
+#### Week 7 (Feb 23 - Mar 1)
+Goal: Cost Savings Logic.
+- [ ] Calvin: Implement the "Cost-Savings Calculator" logic by tracking "Frames Skipped" vs "Frames Sent."
+- [ ] Ethan: Conduct robustness testing: disconnect internet during capture and verify the system doesn't crash.
+
+#### Week 8 (Mar 2 - Mar 8)
+Goal: Stretch Goals & Refinement.
+- [ ] Michael: (Stretch Goal) Implement AWS SNS to send a text message when the "Person" label is detected.
+- [ ] Samuel: Perform a 1-hour "Live Run" to find bugs and document them as "Risks/Mitigations" in the final report.
+
+#### Week 9 (Mar 9 - Mar 15)
+Goal: Final Documentation & Video Demo.
+- [ ] Entire Team: Complete the README.md with installation instructions.
+- [ ] Entire Team: Finalize the living document and record a 5-minute project demo video.
+
 
 ## Major Features
 * Local Motion "Gatekeeper": A Python application that reads a webcam feed and successfully filters out static backgrounds, triggering only on significant movement.
