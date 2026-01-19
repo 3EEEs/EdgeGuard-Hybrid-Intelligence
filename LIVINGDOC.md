@@ -3,11 +3,10 @@
 
 
 ### Team Info
-* Ethan Short – API and Cloud Integration
-* Calvin Grabowski – Lead Motion Detection Lead
-* Michael Wilde – Video Processing Lead
-* Samuel Dressel – Motion Detection and Storage Optimization Lead
-
+* Ethan Short – Cloud Lead
+* Calvin Grabowski – Motion Lead
+* Michael Wilde – Integration Lead
+* Samuel Dressel – Optimization Lead
 
 ## Project Artifacts
 
@@ -82,23 +81,23 @@ List of steps:
 
 
 Use Case 3: Filtered Street Drive-By Monitoring
-*Actors: Homeowner / System User(Primary), EdgeGuard Hybrid Intelligence(System), AWS Services(System)
-*Triggers: A car is detected driving by the camera’s field of view in the street zone.
-*Preconditions: EdgeGuard Hybrid Intelligence is installed and operational, Available internet conection, working motion capture camera, camera is position is positioned to capture both the driveway and street zones, AWS services are linked to system and configured, User has defined street and driveway zones, daytime hours are set in the system, only drive-by vehicles are considered non-relevant, vehicle detections in the street zones are properly defined
-*Postconditions: Drive-by vehicle motion in the street zone during daytime hours is classified as non-relevant, No alert is generated for the user, No long-term cloud storage is used for daytime street drive-by events
-*Extensions/Variations:
-  1. Vehicles that stop, enter the driveway, or linger beyond the                configured time threshold are reclassified as relevant and recorded
-  2. Drive-by vehicles occurring outside daytime hours are treated as            relevant and recorded;
-  3. Events with a person detected alongside a car are always                    considered relevant
-  4. Changes to daytime hours or disabling vehicle filtering apply to            subsequent events.
-*Exceptions:
-  1. A slow-moving or temporarily stopped car in the street zone is              misclassified as a drive-by and filtered out
+* Actors: Homeowner / System User(Primary), EdgeGuard Hybrid Intelligence(System), AWS Services(System)
+* Triggers: A car is detected driving by the camera’s field of view in the street zone.
+* Preconditions: EdgeGuard Hybrid Intelligence is installed and operational, Available internet conection, working motion capture camera, camera is position is positioned to capture both the driveway and street zones, AWS services are linked to system and configured, User has defined street and driveway zones, daytime hours are set in the system, only drive-by vehicles are considered non-relevant, vehicle detections in the street zones are properly defined
+* Postconditions: Drive-by vehicle motion in the street zone during daytime hours is classified as non-relevant, No alert is generated for the user, No long-term cloud storage is used for daytime street drive-by events
+* Extensions/Variations:
+  1. Vehicles that stop, enter the driveway, or linger beyond the configured time threshold are reclassified as relevant and recorded
+  2. Drive-by vehicles occurring outside daytime hours are treated as relevant and recorded;
+  3. Events with a person detected alongside a car are always considered relevant
+  4. Changes to daytime hours or disabling vehicle filtering apply to subsequent events.
+* Exceptions:
+  1. A slow-moving or temporarily stopped car in the street zone is misclassified as a drive-by and filtered out
   2. An object that is not a car is incorrectly classified as a car
   3. AWS services fail, preventing proper analysis or storage
-  4. Network connection fails, limiting cloud-based processing; system may       fall back to local processing
+  4. Network connection fails, limiting cloud-based processing; system may fall back to local processing
 
 
-*List of Steps: 
+List of Steps: 
 1. A car drives past the camera within the street zone during configured daytime hours.
 2. EdgeGuard detects motion locally in the background.
 3. The system tracks the motion’s duration and trajectory.
@@ -107,11 +106,12 @@ Use Case 3: Filtered Street Drive-By Monitoring
 6. An AWS Lambda function is triggered by the upload.
 7. Amazon Rekognition analyzes the image and returns the label “Car.”
 8. EdgeGuard evaluates filtering rules:
-   8.1. Motion occurred entirely in the street zone.
-   8.2. Time of day is within configured daytime hours.
-   8.3. Object label is “Car.”
-   8.4. Motion pattern matches a drive-by.
-9.The event is filtered out and discarded without notifying the user.
+   1. Motion occurred entirely in the street zone.
+   2. Time of day is within configured daytime hours.
+   3. Object label is “Car.”
+   4. Motion pattern matches a drive-by.
+9. The event is filtered out and discarded without notifying the user.
+
 ---
 * **Non-functional Requirements:**
 1. Latency: The time from motion detection to the cloud-processed label appearing on the dashboard should be under 10 seconds.
