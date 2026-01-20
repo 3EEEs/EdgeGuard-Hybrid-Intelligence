@@ -112,6 +112,30 @@ List of Steps:
    4. Motion pattern matches a drive-by.
 9. The event is filtered out and discarded without notifying the user.
 
+
+
+
+Use Case 4: Residential/Commercial Burglary Detection (by Michael Wilde)
+* Actors: Homeowner / System User(Primary), EdgeGuard Hybrid Intelligence(System), AWS Services(System)
+* Triggers:  When motion is detected at a primary point of entry during the state of 'stay' or 'away' armed state.
+* Preconditions: When the security system is armed (stay or away) and clear line of sight to points of entry and connected to internet for sending the data.
+* Postconditions: Verify that a intruder has entered and said an alert to the owner with evidence being stored in cloud and a silent alarm can be triggered. 
+* Extensions/variations:
+  * Facial Recognition: Integrate face comparsion to see if the person is "Authorized" before sounding the alarm.
+  * Weapon Detection: Use Rekognition to specifically scan for labels like "weapon" or crowbar" to escalate the priority of the alert.
+* Exceptions:
+  * Network Failure: If AWS connection is lost, system defaults to a standard motion alert without filtering.
+  * Occlusion: Intruder is wearing a mask or heavy camouflage to prevent facial detection to reach a confidence threshold. 
+
+List of Steps:
+1. A camera detects motion at a restricted entry point during an armed state.
+2. Application captures a burst of high-definition images to ensure clear visibility of the subject's face or clothing.
+3. Images are sent to Amazon Rekognition to perform a label detection.
+4. Application filters the results based on highest confidence score (above 90%).
+5. Environmental Noise is checked and discards if no person is detected.
+6. Application cross-references detection with the armed status of the building alert to the owner's device.
+7. The filtered footage is tagged as "Critical Evidence" and moved to long-term cloud storage.  
+
 ---
 * **Non-functional Requirements:**
 1. Latency: The time from motion detection to the cloud-processed label appearing on the dashboard should be under 10 seconds.
