@@ -42,7 +42,11 @@ Channels: Discord and text groupchat for daily synchronous chat; GitHub Issues f
 
 ---
 
-* **Use Cases (Functional Requirements):**
+### 1. Software architecture
+### 2. Software design
+### 3. Coding guidelines
+
+## Use Cases (Functional Requirements):
 
 Use Case 1: Filtered Security Monitoring (Ethan Short)
 * Actors: Homeowner (Primary), Camera (Hardware), AWS Rekognition (System).
