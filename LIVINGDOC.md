@@ -40,11 +40,138 @@ Channels: Discord and text groupchat for daily synchronous chat; GitHub Issues f
 
 * **Effects:** If successful, the system will reduce data storage and cloud processing costs for individuals and organizations, making intelligent video monitoring more affordable. It also improves usability by allowing users to review only relevant events instead of hours of uneventful footage.
 
+
+## 1. Software architecture
+
+
+EdgeGuard Hybrid Intelligence uses a hybrid between edge (motion) detection and cloud implimentation, creating an event-driven architecture. The system performs early-stage motion detection and filtering **locally** at the edge, while delegating object recognition, storage, and user-facing services to cloud-based components. This architecture reduces bandwidth usage, cloud processing costs, and unnecessary data storage compared to traditional continuous-stream surveillance systems which are constantly sending the cloud meaningless updates.
+
+The system follows a separation-of-concerns approach: motion detection, cloud processing, data persistence, and presentation are implemented as distinct components with well-defined interfaces. This allows costs to be distinct which results in not paying for things that we aren't currently using. 
+
+
+> **KEY INFORMATION:** S3 is the storage (Simple Storage Service), Lambda is the short lived code that triggers events, Rekognition is the amazon AI recognition system, DynamoDB is the noSQL database, and edge is the framwork that we are going to make to capture the motion.
+
+### 1.1 Major Software Components
+
+#### Edge Motion Processing Component
+- Local Python application monitoring a live camera feed
+- Detects motion using frame differencing and background subtraction
+- Applies sensitivity thresholds, cooldown timers, and zone-based rules
+- Captures and uploads only relevant frames or short clips
+
+#### Cloud Ingestion and Processing Component
+- Amazon S3 stores uploaded frames from the edge
+- AWS Lambda functions are triggered by S3 upload events
+- Lambda functions coordinate AI analysis and filtering logic
+
+#### AI Analysis Component
+- Amazon Rekognition performs label detection on uploaded images
+- Returns detected objects (e.g., Person, Car, Animal) with confidence scores
+- Results are used to classify events as relevant or non-relevant
+
+#### Data Storage Component
+- Amazon DynamoDB stores metadata for detected events
+- Stores references to images rather than raw image data
+
+#### Presentation and Notification Component
+- Web-based dashboard displays detection results
+- Optional notifications are sent via AWS SNS for high-priority events
+
+### 1.2 Interfaces Between Components
+
+- **Edge → Cloud Interface**
+  - HTTPS-based uploads using the AWS Boto3 SDK
+  - Data transferred: filtered images and minimal metadata
+
+- **S3 → Lambda Interface**
+  - Event-driven trigger on object upload
+  - Decouples ingestion from processing
+
+- **Lambda → Rekognition Interface**
+  - AWS SDK calls referencing images stored in S3
+
+- **Lambda → DynamoDB Interface**
+  - Writes structured metadata records for later querying
+
+- **Dashboard → DynamoDB / S3 Interface**
+  - Reads event metadata from DynamoDB
+  - Retrieves images on demand using S3 URLs
+
+
+### 1.3 Data Storage and Organization
+
+The system minimizes local storage and does not retain full video recordings.
+
+#### Local Storage
+- Temporary in-memory buffers used during motion analysis
+- No persistent video storage
+
+#### Cloud Storage
+
+- **Amazon S3 (Simple Storage System)**
+  - Stores filtered images or short clips
+  - Organized by date and event type
+
+- **Amazon DynamoDB**
+
+  High-level schema:
+  - Primary key for DynamoDB to store data: `EventID` (for finding the event)
+  - When it happened: `Timestamp`
+  - Where the image is stored: `S3_Object_URL`
+  - What was detected: `Detected_Labels`
+  - How confident are we about what we detected: `Confidence_Scores`
+  - How important is that event: `Event_Priority`
+  - Where it happened: `Zone`
+
+This design separates large binary objects from structured metadata to improve scalability and query performance.
+
+
+### 1.4 Architectural Assumptions
+
+- Edge devices have sufficient computational capacity for real-time motion detection
+- Network connectivity is available for cloud-based analysis
+- Users prioritize reduced cost and filtered results over full continuous video storage
+- AWS services are available and properly configured
+- Event-driven latency under 10 seconds is acceptable for the use cases
+
+
+### 1.5 Architectural Decisions and Alternatives
+
+#### Decision 1: Edge-Based Motion Filtering
+
+**Chosen:** Perform motion detection locally before uploading data.
+
+**Alternative:** Continuously stream video to the cloud for processing.
+
+- **Pros of chosen approach**
+  - Reduced cloud costs
+  - Lower bandwidth usage
+  - Improved privacy
+
+- **Cons**
+  - Increased processing requirements on the edge device
+
+
+#### Decision 2: Serverless Cloud Processing
+
+**Chosen:** Use AWS Lambda for event-driven processing.
+
+**Alternative:** Use a persistent backend server (e.g., EC2).
+
+- **Pros of chosen approach**
+  - Automatic scaling
+  - Lower operational overhead
+  - Cost efficiency
+
+- **Cons**
+  - Cold-start latency
+  - Execution time limits
+
 ---
 
-### 1. Software architecture
-### 2. Software design
-### 3. Coding guidelines
+
+## 2. Software design
+## 3. Coding guidelines
 
 ## Use Cases (Functional Requirements):
 
