@@ -1,0 +1,3 @@
+# don't push your environment folder
+env/
+venv/
