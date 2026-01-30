@@ -1,0 +1,66 @@
+# Weekly Status Report: [Date, 2026-01-25]
+
+**Team Name:** 7
+**Team Members:** Ethan Short, Calvin Grabowski, Michael Wilde, Sammuel Dressel
+
+---
+
+## 1. Team Report
+*(This section is for the TA. It includes your progress and the agenda for your standup meeting.)*
+
+### A. Goals from Last Week
+* *(Since this is the first report, leave this blank or write: "N/A - First week of project.")*
+
+### B. Progress and Issues
+* **Progress:** Formed the team and selected "[Project Name]" as our topic.
+* **Progress:** Created the GitHub repository and added all collaborators (including staff).
+* **Progress:** Drafted the initial "Living Document" and defined the Heilmeier Catechism sections.
+* **Issues:** We are currently debating whether to use [Technology A] or [Technology B] for the backend.
+* **Learnings:** Learned how to use GitHub Project Boards for task tracking.
+
+### C. Plans and Goals for Next Week
+*(High-level team goals. Tasks must be measurable.)*
+* **Goal:** Finalize the "Living Document" proposal for submission.
+* **Goal:** Create the 4-slide presentation deck.
+* **Task:** [Name 1] will set up the skeleton React app (Est: 2 hours).
+* **Task:** [Name 2] will write the "Risks" section of the proposal (Est: 1 hour).
+
+---
+
+## 2. Contributions of Individual Team Members
+
+### Ethan Short
+* **Goals from Last Week:** (N/A - First week)
+* **Progress and Issues:**
+    * Set up the GitHub repository structure.
+    * Wrote the "Abstract" for the proposal.
+* **Plans and Goals for Next Week:**
+    * Research specific API endpoints for the project (Est: 3 hours).
+    * Create the architecture diagram for the slides (Est: 2 hours).
+
+### Calvin Grabowski
+* **Goals from Last Week:** (N/A - First week)
+* **Progress and Issues:**
+    * Brainstormed use cases.
+    * Wrote the "Current Practice" section.
+* **Plans and Goals for Next Week:**
+    * Draft 3 Non-functional requirements (Est: 1 hour).
+    * Prepare the script for the class presentation (Est: 2 hours).
+
+### Michael Wilde
+* **Goals from Last Week:** (N/A - First week)
+* **Progress and Issues:**
+    * Brainstormed use cases.
+    * Wrote the "Current Practice" section.
+* **Plans and Goals for Next Week:**
+    * Draft 3 Non-functional requirements (Est: 1 hour).
+    * Prepare the script for the class presentation (Est: 2 hours).
+
+### Sammuel Dressel
+* **Goals from Last Week:** (N/A - First week)
+* **Progress and Issues:**
+    * Brainstormed use cases.
+    * Wrote the "Current Practice" section.
+* **Plans and Goals for Next Week:**
+    * Draft 3 Non-functional requirements (Est: 1 hour).
+    * Prepare the script for the class presentation (Est: 2 hours).
