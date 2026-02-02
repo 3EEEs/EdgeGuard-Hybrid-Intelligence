@@ -172,6 +172,43 @@ This design separates large binary objects from structured metadata to improve s
 
 ## 2. Software design
 ## 3. Coding guidelines
+## 4. Process description
+**i. Risk assessment**
+* Risk 1: Inaccurate Motion Triggering
+  * Likelihood: High
+  * Impact: Medium
+  * Evidence: Our abstract notes on irrelevant motion, such as environmental noise, is a potential issue that can be triggered by light changes or wind and send unnecessary data to AWS Rekognition.
+  * Reduction/Better Estimates: Samuel is implementing a MOG2 Background Subtraction and estimating the accuracy by running the edge script against a pre-recorded video of a static room with moving shadows. 
+  * Detection: Check to see what data is being sent to AWS Rekognition.
+  * Mitigation: Have a "sensitivity slider" added for the user to manually adjust sensitivity.
+* Risk 2: Latency to AWS Rekognition
+  * Likelihood: Medium
+  * Impact: Low
+  * Evidence: Our NFR specifies a less than 10-second delay for our software to process the frame.
+  * Reduction/Better Estimates: Perform a "stopwatch" test from the moment that motion is detected to when all the data is processed.
+  * Detection: Incorporate a "Process_Time" field in the DynamoDB schema to track the duration from Timestamp to DB_Write_Time.
+  * Mitigation: If the latency is too high, investigate the "Provisioned Concurrency" for Lambda or reduce the image resolution/size before uploading to S3 to speed up transfer.
+* Risk 3: AWS Free Tier Exhaustion
+  * Likelihood: Medium
+  * Impact: Medium
+  * Evidence: Rekognition is not infinitely free, and in high-traffic areas could trigger hundreds of pings and max out the budget.
+  * Reduction/Better Estimates: The "Cooldown timer" can be used as a primary defense, and it can be used to estimate monthly costs.
+  * Detection: AWS Budget Alerts will be set to a max cap, and we will get notified when it's reached.
+  * Mitigation: Implement the "Emergency Kill Switch" in the edge script, which stops the upload if the local count exceeds a daily limit.
+* Risk 4: "Edge" Hardware & Environment Variability
+  * Likelihood: Medium
+  * Impact: Medium
+  * Evidence: Use Case 3 mentions "daytime hours" and street zones. Performance may drop significantly at night or if the camera becomes obstructed.
+  * Reduction/Better Estimates: Test the camera in three lighting conditions: Bright daylight, Indoor lighting, and Low light.
+  * Detection: Low "Confidence_Scores" (below 50%) consistently appearing in DynamoDB for objects that are clearly visible to humans.
+  * Mitigation: Document minimum lux (lighting) requirements in the README. If confidence is low, the system could skip the "High Priority" alert but still save the metadata for manual review.
+* Risk 5: Unhandled Network Interruptions (Edge-to-Cloud Gap)
+  * Likelihood: Medium
+  * Impact: Medium
+  * Evidence: Use Case 3 mentions "Network connections; system may fall back to local processing." If the internet drops while a frame is being sent via boto3, the Python script may hang or crash.
+  * Reduction/Better Estimates: Ethan will test this in Week 7 and simulate a connection loss by disabling the connection to the internet while running the edge script.
+  * Detection: Implementing a try-except block around the S3 upload function and logging the number of ConnectionError events locally.
+  * Mitigation: Implement a local SQLite queue. If the upload fails, please save the metadata locally and try the upload again once the connection is restored. 
 
 ## Use Cases (Functional Requirements):
 
