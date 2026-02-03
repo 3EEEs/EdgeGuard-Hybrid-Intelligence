@@ -208,7 +208,20 @@ This design separates large binary objects from structured metadata to improve s
   * Evidence: Use Case 3 mentions "Network connections; system may fall back to local processing." If the internet drops while a frame is being sent via boto3, the Python script may hang or crash.
   * Reduction/Better Estimates: Ethan will test this in Week 7 and simulate a connection loss by disabling the connection to the internet while running the edge script.
   * Detection: Implementing a try-except block around the S3 upload function and logging the number of ConnectionError events locally.
-  * Mitigation: Implement a local SQLite queue. If the upload fails, please save the metadata locally and try the upload again once the connection is restored. 
+  * Mitigation: Implement a local SQLite queue. If the upload fails, please save the metadata locally and try the upload again once the connection is restored.
+
+**ii. Documentation**
+Our current plan for the documentation style that we plan to create for our hybrid architecture is to ensure that our local Python environment and the AWS cloud infrastructure are transparent and maintainable. 
+1. **Developer Documentation (Technical Reference)**
+   * API & Data Contract (docs/INTERFACES.md): Since the backend is locked, this document acts as the "source of truth" for the team. It will define the structure of the JSON metadata sent to the DynamoDB and the naming conventions for S3 objects. This ensures everything can stay synced.
+   * Motion Logic Technical Guide (docs/MOTION_PROCESSING.md): A write up into the "Gatekeeper" logic, which will explain the implementation of frame-differencing and background subtraction, including how to tune the sensitivity and cooldown variables within the code.
+   * Local Environment Setup:
+2. **User & Operator Documentation**
+   * Quick-Start User Guide (docs/USER_MANUAL.md): A guide for the "Homeowner" actor. It will include instructions on camera placement, how to run the local Python script, and how to access the Web Dashboard to view filtered results.
+   * Cost & Performance Optimization Guide: A section explaining the trade-offs between local "Edge" settings and AWS costs. It will teach the user how to minimize Rekognition pings by adjusting the sensitivity sliders.
+   * System Health & Troubleshooting: A troubleshooting tree for common local issues, such as "Camera not detected" or "S3 Upload failed (Network Error)," including how to check the local logs
+3. **Project Governance**
+   * Weekly Status Reports (/reports): Ongoing documentation of the project's health, following the YYYYMMDD.md format to document the team's progress and goals.
 
 ## Use Cases (Functional Requirements):
 
