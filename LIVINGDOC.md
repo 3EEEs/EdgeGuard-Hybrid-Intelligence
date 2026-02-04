@@ -224,62 +224,60 @@ Our current plan for the documentation style that we plan to create for our hybr
    * Weekly Status Reports (/reports): Ongoing documentation of the project's health, following the YYYYMMDD.md format to document the team's progress and goals.
 
 **iii. Test Plan & Bugs**
-
-Our testing plan for **EdgeGuard Hybrid Intelligence** ensures that all components, workflows, and user interactions meet functional and non-functional requirements, including motion detection accuracy, cloud integration, latency, dashboard usability, and cost-saving logic.
-
+Our testing plan for EdgeGuard Hybrid Intelligence ensures that all components, workflows, and user interactions meet functional and non-functional requirements, including motion detection accuracy, cloud integration, latency, dashboard usability, and cost-saving logic.
 1. **Overview**
-   * We plan to test across three levels: **unit testing**, **system (integration) testing**, and **usability testing**.
-   * **Disciplined Approach:** Define expected behaviors for each component and workflow, use automated tests for unit and system validation, structured observation for usability testing, log all bugs in GitHub Issues with reproducible steps and evidence, perform regression verification after fixes, and review outcomes weekly.
+   * We plan to test across three levels: unit testing, system (integration) testing, and usability testing.
+   * Disciplined Approach: Define expected behaviors for each component and workflow, use automated tests for unit and system validation, structured observation for usability testing, log all bugs in GitHub Issues with reproducible steps and evidence, perform regression verification after fixes, and review outcomes weekly.
 
 2. **Unit Testing**
    * **Edge Motion Detection**
      - Test frame differencing, background subtraction, and sensitivity thresholds
      - Ensure motion is detected accurately and irrelevant motion is ignored
-     - **Disciplined Approach:** Use controlled input scenarios to validate motion detection behavior and log failures in GitHub Issues with expected vs. actual results.
+     - Disciplined Approach: Use controlled input scenarios to validate motion detection behavior and log failures in GitHub Issues with expected vs. actual results.
    * **S3 Upload Scripts**
      - Verify frames are correctly uploaded to S3 and retries occur on failure
      - Validate proper file naming and metadata format
-     - **Disciplined Approach:** Simulate upload successes and failures and log errors in GitHub Issues with request details and logs.
+     - Disciplined Approach: Simulate upload successes and failures and log errors in GitHub Issues with request details and logs.
    * **Lambda Triggers**
      - Test that Lambda functions respond correctly to S3 events and invoke Rekognition
-     - **Disciplined Approach:** Trigger Lambda functions with test S3 events and log invocation or processing failures in GitHub Issues.
+     - Disciplined Approach: Trigger Lambda functions with test S3 events and log invocation or processing failures in GitHub Issues.
    * **DynamoDB Writes**
      - Ensure metadata is stored accurately (EventID, Timestamp, Labels, Confidence, Priority)
      - Test concurrency by writing multiple events simultaneously
-     - **Disciplined Approach:** Validate database writes using known inputs and log schema or consistency errors in GitHub Issues.
+     - Disciplined Approach: Validate database writes using known inputs and log schema or consistency errors in GitHub Issues.
    * **AI Analysis Handling**
      - Ensure labels are interpreted correctly and filtered per rules
-     - **Disciplined Approach:** Test label-handling logic with predefined Rekognition outputs and log rule violations in GitHub Issues.
+     - Disciplined Approach: Test label-handling logic with predefined Rekognition outputs and log rule violations in GitHub Issues.
 
 3. **System (Integration) Testing**
    * **Local-to-Cloud Workflow**
      - Test motion detection → S3 upload → Lambda → Rekognition → DynamoDB → Dashboard
      - Confirm images appear on the dashboard with correct labels and metadata
-     - **Disciplined Approach:** Execute full workflow tests and log failures at specific pipeline stages in GitHub Issues with system logs.
+     - Disciplined Approach: Execute full workflow tests and log failures at specific pipeline stages in GitHub Issues with system logs.
    * **Drive-By Filtering**
      - Validate that non-relevant street motion is filtered correctly
      - Ensure relevant events trigger alerts and store metadata
-     - **Disciplined Approach:** Run controlled drive-by scenarios and log misclassifications in GitHub Issues with filtering context.
+     - Disciplined Approach: Run controlled drive-by scenarios and log misclassifications in GitHub Issues with filtering context.
    * **Burglary / High-Priority Detection**
      - Test that motion at primary entry points triggers alerts and stores evidence
      - Confirm confidence thresholds and armed-state logic
-     - **Disciplined Approach:** Verify alert escalation logic through simulated intrusion scenarios and log threshold failures in GitHub Issues.
+     - Disciplined Approach: Verify alert escalation logic through simulated intrusion scenarios and log threshold failures in GitHub Issues.
    * **Cooldown & Cost-Saving Logic**
      - Test frame throttling during high-frequency motion
      - Verify dashboard reflects frames skipped versus frames sent
-     - **Disciplined Approach:** Stress-test high-motion conditions and log throttling or reporting inconsistencies in GitHub Issues.
+     - Disciplined Approach: Stress-test high-motion conditions and log throttling or reporting inconsistencies in GitHub Issues.
 
 4. **Usability Testing**
    * **Dashboard Navigation**
      - Ensure images, timestamps, and labels are clear and accessible on desktop and mobile
-     - **Disciplined Approach:** Conduct task-based navigation tests and log usability friction points in GitHub Issues.
+     - Disciplined Approach: Conduct task-based navigation tests and log usability friction points in GitHub Issues.
    * **Configuration & Control**
      - Test sensitivity sliders, zone selection, and settings persistence
-     - **Disciplined Approach:** Observe user configuration tasks and log confusion or failures in GitHub Issues.
+     - Disciplined Approach: Observe user configuration tasks and log confusion or failures in GitHub Issues.
    * **Alerts & Notifications**
      - Verify high-priority events trigger dashboard alerts and optional notifications
      - Ensure filtered events do not generate false alerts
-     - **Disciplined Approach:** Test alert scenarios and log false positives or missed notifications in GitHub Issues.
+     - Disciplined Approach: Test alert scenarios and log false positives or missed notifications in GitHub Issues.
 
 5. **Bug Tracking**
    * All bugs from unit, system, and usability tests are logged in **GitHub Issues**
