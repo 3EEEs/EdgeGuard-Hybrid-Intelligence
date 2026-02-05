@@ -169,9 +169,66 @@ This design separates large binary objects from structured metadata to improve s
 
 ---
 
-
 ## 2. Software design
-## 3. Coding guidelines
+
+The software design follows the "Separation of Concerns" principle, dividing the system into the local edge application, the cloud serverless logic, and the frontend visualization.
+
+### 2.1 Edge Motion Processing Component (Python)
+This component runs locally on the edge device to handle video capture and initial filtering.
+
+* **Packages & Dependencies:** `opencv-python` (cv2), `boto3` (AWS SDK), `python-dotenv` (Configuration).
+* **Key Classes/Abstractions:**
+    * **`VideoStream`**:
+        * *Responsibilities:* Initializes the camera hardware using OpenCV, manages the frame buffer, and provides a method to retrieve the current frame safely across threads. Handles device connection errors.
+    * **`MotionDetector`**:
+        * *Responsibilities:* Implements the background subtraction logic (using `cv2.createBackgroundSubtractorMOG2`). It compares the current frame against the background model, calculates the contour area of changes, and returns a boolean indicating if "significant motion" occurred based on the defined sensitivity threshold.
+    * **`CloudUploader`**:
+        * *Responsibilities:* Manages the connection to AWS S3 via `boto3`. It handles the asynchronous upload of image binaries, generates unique filenames based on timestamps, and implements retry logic for network failures.
+    * **`MainController`**:
+        * *Responsibilities:* The entry point script that orchestrates the loop: fetches frames from `VideoStream`, passes them to `MotionDetector`, checks cooldown timers, and triggers `CloudUploader` when valid motion is detected.
+
+### 2.2 Cloud Processing Component (AWS Lambda - Python)
+This component represents the business logic execution triggered by events.
+
+* **Packages & Dependencies:** `boto3` (AWS SDK), `json`, `datetime`.
+* **Key Classes/Abstractions:**
+    * **`LambdaHandler` (Function)**:
+        * *Responsibilities:* The main entry point function (`lambda_handler`). It parses the S3 event object to extract the bucket name and object key (filename).
+    * **`RekognitionClient`**:
+        * *Responsibilities:* Wraps AWS Rekognition API calls. Accepts an S3 reference and returns a list of detected labels and confidence scores.
+    * **`LabelFilter`**:
+        * *Responsibilities:* Contains the logic to determine if a detection is "relevant" (e.g., filters out "Car" labels if the `Daytime` flag is true, or filters out low-confidence results).
+    * **`MetadataWriter`**:
+        * *Responsibilities:* Formats the final event data object (Timestamp, S3 URL, Detected Labels, Confidence) and writes it to the Amazon DynamoDB table.
+
+### 2.3 Presentation Component (React/Web)
+This component fetches and displays the processed data to the user.
+
+* **Packages & Dependencies:** `React`, `aws-sdk` (JavaScript), `axios` (HTTP client).
+* **Key Units of Abstraction:**
+    * **`EventFeed` (Component)**:
+        * *Responsibilities:* A container component that manages the state of the dashboard. It polls DynamoDB for new entries and renders a list of `EventCard` components.
+    * **`EventCard` (Component)**:
+        * *Responsibilities:* A UI component responsible for rendering a single detection event. It displays the image (via S3 signed URL), the timestamp, and chips/badges for the detected AI labels (e.g., "Person: 98%").
+    * **`FilterControls` (Component)**:
+        * *Responsibilities:* Provides user input mechanisms (date pickers, label dropdowns) to filter the `EventFeed` view.
+
+---
+
+## 3. Coding guideline
+
+### 3.1 Python (Edge Client & AWS Lambda)
+**Guideline:** **PEP 8 – Style Guide for Python Code**
+* **Link:** [https://peps.python.org/pep-0008/](https://peps.python.org/pep-0008/)
+* **Why we chose this:** PEP 8 is the de-facto industry standard for Python. Adhering to it ensures that our code is readable by any external Python developer and maintains consistency between the local edge scripts and the cloud Lambda functions. It strictly defines naming conventions (e.g., `snake_case` for functions, `CamelCase` for classes) and indentation (4 spaces), which prevents merge conflicts caused by formatting differences.
+* **Enforcement Plan:** We will enforce this using **Flake8** or the **Black** auto-formatter. Before merging a Pull Request, the developer must run the linter locally. We will configure our IDEs (VS Code) to highlight PEP 8 violations automatically.
+
+### 3.2 JavaScript/React (Dashboard)
+**Guideline:** **Airbnb JavaScript Style Guide**
+* **Link:** [https://github.com/airbnb/javascript](https://github.com/airbnb/javascript)
+* **Why we chose this:** The Airbnb style guide is widely regarded as the most robust and comprehensive guide for modern JavaScript and React development. It provides specific rules for React components (naming, ordering, and props) that standard JS guides lack, ensuring our frontend code is modular and clean.
+* **Enforcement Plan:** We will use **ESLint** with the `eslint-config-airbnb` configuration. This will be integrated into the project's `package.json`, allowing team members to run `npm run lint` to check for errors before committing code.
+
 ## 4. Process description
 **i. Risk assessment**
 * Risk 1: Inaccurate Motion Triggering
