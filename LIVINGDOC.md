@@ -16,6 +16,8 @@ Project Board: [Github Project](https://github.com/users/3EEEs/projects/2/views/
 
 Google Doc: [Project Deliverable 1](https://docs.google.com/presentation/d/1xFujLNTsQRAWX66ZN-khSHP7Vj1CQskHdH3TL1hhviU/edit)
 
+Google Doc: [Midterm](https://docs.google.com/presentation/d/1DOCeAFsl3dXq1LxO6fRHvyV8NQJbfB0Ctzz7V4p3Yb0/edit)
+
 Report Format: [Link](https://canvas.oregonstate.edu/courses/2026970/assignments/10302739)
 
 ## Communication Plan
