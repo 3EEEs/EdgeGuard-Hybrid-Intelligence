@@ -1,5 +1,5 @@
 # Project Proposal: EdgeGuard Hybrid Intelligence
-## Date: January 19, 2026 Course: CS 362
+## Date: February 2nd, 2026 Course: CS 362
 
 
 ### Team Info
