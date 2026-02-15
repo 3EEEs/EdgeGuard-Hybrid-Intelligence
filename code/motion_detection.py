@@ -3,6 +3,10 @@ import time
 import numpy as np
 import os
 
+# motion_detection code add-on
+from cloud_uploader import CloudUploader
+# Init once
+uploader = CloudUploader()
 
 # 0 means default camera, 1 or 2 means external camera
 cap = cv2.VideoCapture(0)
@@ -44,6 +48,17 @@ while True:
 
         # cv2.imshow("Live Feed", gray)
         cv2.imshow("Delta", frame_delta)
+
+        # --- Cloud_Uploader Code ---
+        # Save the image locally first
+        filename = f"capture_{int(time.time())}.jpg"
+        cv2.imwrite(filename, frame)
+        # Upload to AWS via your choice
+        url = uploader.upload_frame(filename)
+        # Delete local file to fill up local hardware 
+        if url:
+             print(f"File live at: {url}")
+             os.remove(filename)
 
         # moves the current frame to the previous frame holder
         prev_gray = gray
