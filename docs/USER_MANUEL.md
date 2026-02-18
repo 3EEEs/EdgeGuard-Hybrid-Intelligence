@@ -29,9 +29,8 @@ EdgeGuard Hybrid Intelligence captures motion from your camera feed, uploads rel
 - **Work in Progress:** Event filtering controls, analytics, and alert notifications are still under development.
 
 ### Notes
-- Ensure all prerequisites are installed:
-  - `boto3`, `botocore`, `python-dotenv`
-  - Python virtual environment activated
+- Ensure all prerequisites are installed
+- Python virtual environment activated
 - The system currently requires manual execution of the edge script to start capturing motion.
 - Some advanced features like real-time alerts and detailed dashboard filtering are not yet available.
 
@@ -98,6 +97,7 @@ Thank you for helping improve **EdgeGuard Hybrid Intelligence**! To report a bug
 At this time, there are **no known bugs**.  
 This section will be updated as the project progresses and any issues are discovered.  
 _Work in progress – check back regularly for updates!_
+
 
 
 
