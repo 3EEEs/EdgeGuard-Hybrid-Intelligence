@@ -10,13 +10,14 @@ Thank you for helping improve our program! Please follow these instructions to e
 5. Submit the issue. Our team will review and respond as quickly as possible.
 
 ---
+
+## Bug Report Template
+
 name: "Bug Report"
 about: "Report a problem you encountered while using the program"
 title: ""
 labels: bug
 assignees: ""
-
-## Bug Report Details
 
 ### Description
 Describe the problem clearly.  
@@ -52,3 +53,4 @@ Does this issue occur:
 
 ### Additional Context
 Any other information that may help diagnose the issue, such as configuration settings or related issues.
+
