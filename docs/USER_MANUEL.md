@@ -93,10 +93,11 @@ Thank you for helping improve **EdgeGuard Hybrid Intelligence**! To report a bug
 ---
 
 ## Known Bugs
+1. motion_detection.py Fails to Upload Frame Due to NoneType Bucket in S3 Client
+   [Issue Link for Bug:] (https://github.com/3EEEs/EdgeGuard-Hybrid-Intelligence/issues/1)
 
-At this time, there are **no known bugs**.  
-This section will be updated as the project progresses and any issues are discovered.  
-_Work in progress – check back regularly for updates!_
+
+
 
 
 
