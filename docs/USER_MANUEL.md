@@ -13,7 +13,7 @@ EdgeGuard Hybrid Intelligence captures motion from your camera feed, uploads rel
   - The frame is uploaded to your AWS S3 bucket using the `CloudUploader` component.
   - Local copies are automatically deleted after successful upload.
 - Users can preview motion detection in the application window.
-- **Work in Progress:** User-adjustable sensitivity sliders and zone-based filtering are not fully implemented.
+- **Work in Progress:** User-adjustable sensitivity sliders and zone-based filtering are not fully implemented. Backgorund subtraction is not yet fully implmented.
 
 ### Cloud Upload and Processing
 
@@ -97,6 +97,7 @@ Thank you for helping improve **EdgeGuard Hybrid Intelligence**! To report a bug
 At this time, there are **no known bugs**.  
 This section will be updated as the project progresses and any issues are discovered.  
 _Work in progress – check back regularly for updates!_
+
 
 
 
