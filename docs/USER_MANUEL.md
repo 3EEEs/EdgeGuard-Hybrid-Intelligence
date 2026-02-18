@@ -52,6 +52,13 @@ Thank you for helping improve **EdgeGuard Hybrid Intelligence**! To report a bug
 **Additional Context:**  
 *(Any other information that may help diagnose the issue, such as configuration settings or related issues)*
 
+---
+
+## Known Bugs
+
+At this time, there are **no known bugs**.  
+This section will be updated as the project progresses and any issues are discovered.  
+_Work in progress – check back regularly for updates!_
 
 
 
