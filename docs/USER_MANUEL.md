@@ -1,39 +1,41 @@
 
 
-## How to Use the Software
 
-EdgeGuard Hybrid Intelligence captures and processes meaningful video events using local motion detection and cloud-based analysis. This guide explains how to interact with the system after it has been started.
+ ---## How to Use the Software
+
+EdgeGuard Hybrid Intelligence captures motion from your camera feed, uploads relevant frames to the cloud, and analyzes them using AWS services. Here's how to interact with the system:
 
 ### Motion Detection (Edge)
 
-- When motion is detected:
-  - The frame is displayed in a preview window.
-  - The frame is temporarily saved locally.
-  - The frame is uploaded automatically to AWS S3 for cloud processing.
-  
-- Cooldown and Filtering:
-  - A cooldown timer prevents excessive uploads.
-  - Only frames meeting the motion threshold are uploaded.
-  - This reduces unnecessary cloud processing costs.
+- The Python script continuously monitors your camera for motion using frame differencing and Gaussian blur.
+- When motion exceeds the sensitivity threshold:
+  - A frame is captured and temporarily saved locally.
+  - The frame is uploaded to your AWS S3 bucket using the `CloudUploader` component.
+  - Local copies are automatically deleted after successful upload.
+- Users can preview motion detection in the application window.
+- **Work in Progress:** User-adjustable sensitivity sliders and zone-based filtering are not fully implemented.
 
-### Cloud Processing (AWS)
+### Cloud Upload and Processing
 
-- Uploaded frames are analyzed by AWS Lambda functions using Amazon Rekognition.
-- Detected objects are labeled and stored in DynamoDB with metadata.
-- Users can access processed events via the web dashboard (functionality in progress).
+- Uploaded frames trigger AWS Lambda functions for further analysis.
+- Amazon Rekognition detects objects in the images and returns labels with confidence scores.
+- Metadata (timestamp, detected labels, confidence scores, priority, S3 URL) is stored in DynamoDB.
+- **Work in Progress:** Full integration with the dashboard and automated notifications are pending.
 
-### Web Dashboard (Work in Progress)
+### Web Dashboard (Upcoming)
 
-- The dashboard will display captured frames, AI-detected labels, timestamps, and event metadata.
-- Users will eventually be able to filter events by label, zone, or priority.
-- Real-time notifications for high-priority events (SMS/email) are planned.
+- The dashboard will display captured frames with labels, timestamps, and metadata.
+- Users will be able to filter events and review high-priority alerts.
+- **Work in Progress:** Event filtering controls, analytics, and alert notifications are still under development.
 
-### Notes on Missing Functionality
+### Notes
+- Ensure all prerequisites are installed:
+  - `boto3`, `botocore`, `python-dotenv`
+  - Python virtual environment activated
+- The system currently requires manual execution of the edge script to start capturing motion.
+- Some advanced features like real-time alerts and detailed dashboard filtering are not yet available.
 
-- Dashboard filtering, notifications, and some analytics are still under development.
-- Edge settings like sensitivity sliders and zone selection may be partially implemented.
-
- ---
+--- 
 
 ## How to Report a Bug
 
@@ -96,6 +98,7 @@ Thank you for helping improve **EdgeGuard Hybrid Intelligence**! To report a bug
 At this time, there are **no known bugs**.  
 This section will be updated as the project progresses and any issues are discovered.  
 _Work in progress – check back regularly for updates!_
+
 
 
 
