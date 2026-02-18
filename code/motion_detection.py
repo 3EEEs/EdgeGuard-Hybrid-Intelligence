@@ -14,6 +14,10 @@ cap = cv2.VideoCapture(0)
 # carries the previous frame to check for motion
 prev_gray = None
 
+# Cooldown timer settings
+UPLOAD_COOLDOWN = 0.015  # seconds between uploads (ex 0.1 sec = max 10 uploads/sec)
+last_upload_time = 0  # timestamp of last upload
+
 # this makes the camera run continuously until I press q
 while True:
         ret, frame = cap.read()
@@ -50,15 +54,19 @@ while True:
         cv2.imshow("Delta", frame_delta)
 
         # --- Cloud_Uploader Code ---
-        # Save the image locally first
-        filename = f"capture_{int(time.time())}.jpg"
-        cv2.imwrite(filename, frame)
-        # Upload to AWS via your choice
-        url = uploader.upload_frame(filename)
-        # Delete local file to fill up local hardware 
-        if url:
-             print(f"File live at: {url}")
-             os.remove(filename)
+        current_time = time.time() #sees elapsed time to help maintain upload cooldown
+        if current_time - last_upload_time >= UPLOAD_COOLDOWN: # Check if cooldown period has passed
+
+            # Save the image locally first
+            filename = f"capture_{int(time.time())}.jpg"
+            cv2.imwrite(filename, frame)
+            # Upload to AWS via your choice
+            url = uploader.upload_frame(filename)
+            # Delete local file to fill up local hardware 
+            if url:
+                print(f"File live at: {url}")
+                os.remove(filename)
+            last_upload_time = current_time  # Only now reset the cooldown
 
         # moves the current frame to the previous frame holder
         prev_gray = gray
