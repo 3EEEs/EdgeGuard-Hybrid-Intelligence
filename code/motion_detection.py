@@ -11,6 +11,9 @@ uploader = CloudUploader()
 # 0 means default camera, 1 or 2 means external camera
 cap = cv2.VideoCapture(0)
 
+# --- Background Subtractor (MOG2) ---
+fgbg = cv2.createBackgroundSubtractorMOG2(history=500, varThreshold=25, detectShadows=True)
+
 # carries the previous frame to check for motion
 prev_gray = None
 
