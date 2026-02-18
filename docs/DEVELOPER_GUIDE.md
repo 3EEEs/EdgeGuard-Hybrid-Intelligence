@@ -20,9 +20,9 @@ cd EdgeGuard-Hybrid-Intelligence
   - **Create enviroment (optional):**
     
     ```bash 
-    python venv -m env
+    python -m venv env 
     ```
-  - **Run Envrionment:**
+  - **Run Environment:**
     
     ```bash 
     ./env/Scripts/activate
@@ -118,3 +118,4 @@ aws s3 ls
   ```bash
   aws s3 cp sample.jpg s3://edgeguard-uploads/
   ```
+
