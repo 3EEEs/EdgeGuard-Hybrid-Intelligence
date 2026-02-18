@@ -1,5 +1,5 @@
 
-# How to Report a Bug
+## How to Report a Bug
 
 Thank you for helping improve our program! Please follow these instructions to ensure your bug report is complete and actionable:
 
@@ -11,13 +11,13 @@ Thank you for helping improve our program! Please follow these instructions to e
 
 ---
 
-## Bug Report Template
+### Bug Report Template
 
-name: "Bug Report"
-about: "Report a problem you encountered while using the program"
-title: ""
-labels: bug
-assignees: ""
+##name: "Bug Report"
+##about: "Report a problem you encountered while using the program"
+##title: ""
+##labels: bug
+##assignees: ""
 
 ### Description
 Describe the problem clearly.  
@@ -53,5 +53,6 @@ Does this issue occur:
 
 ### Additional Context
 Any other information that may help diagnose the issue, such as configuration settings or related issues.
+
 
 
