@@ -1,7 +1,7 @@
 
 
 
- ---## How to Use the Software
+## How to Use the Software
 
 EdgeGuard Hybrid Intelligence captures motion from your camera feed, uploads relevant frames to the cloud, and analyzes them using AWS services. Here's how to interact with the system:
 
@@ -98,6 +98,7 @@ Thank you for helping improve **EdgeGuard Hybrid Intelligence**! To report a bug
 At this time, there are **no known bugs**.  
 This section will be updated as the project progresses and any issues are discovered.  
 _Work in progress – check back regularly for updates!_
+
 
 
 
