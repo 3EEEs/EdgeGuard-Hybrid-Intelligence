@@ -174,3 +174,32 @@ Test Harness: * Use pytest for all Python modules.
 Use Jest for the React Dashboard.
 
 Mocks: When testing AWS integration locally, use the moto library to mock boto3 calls so we do not exhaust our AWS Free Tier limits during automated CI/CD runs.
+
+## 5. Building a Release
+Since EdgeGuard Hybrid Intelligence consists of an edge client, a cloud backend, and a web dashboard, releasing a new version requires a few coordinated steps. Currently, this process is manual.
+
+Pre-Release Tasks
+Update Version Numbers: Update the version number in code/VERSION.txt and inside the code/dashboard/package.json file.
+
+Sanity Checks (End-to-End Test): Before tagging a release, a developer must perform a live system test:
+
+Run the edge Python script locally with a live webcam.
+
+Trigger significant motion in front of the camera.
+
+Verify the image appears on the web dashboard within 10 seconds with the correct AI labels and confidence scores.
+
+## 6. Deployment Tasks
+Cloud Update: Package and deploy any updated Lambda functions or IAM permission changes using the AWS Console or the provided deploy script (code/aws/deploy.sh).
+
+Dashboard Build: Compile the React application for production:
+
+```bash
+   cd code/dashboard
+   npm run build
+   ```
+Tag the Release: Create a release tag in GitHub (e.g., v1.0.0-beta) summarizing the new features and bug fixes.
+
+Commit this to your `main` branch and you can check off the "Developer Documentation" requirement for the assignment! 
+
+You have less than two hours left. Would you like me to draft up the `docs/USER_MANUAL.m
