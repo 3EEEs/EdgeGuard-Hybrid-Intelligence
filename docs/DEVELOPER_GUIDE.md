@@ -119,3 +119,58 @@ aws s3 ls
   aws s3 cp sample.jpg s3://edgeguard-uploads/
   ```
 
+## 4. Testing the Software
+
+Testing is divided into three levels: Unit, Integration (System), and Usability.
+
+### Local Edge Tests (Python)
+To run the unit tests for the local motion detection and S3 upload modules, we use `pytest`.
+
+1. Ensure your virtual environment is active.
+2. Install testing dependencies:
+   ```bash
+   pip install pytest
+   ```
+3. Run the test suite from the root directory:
+   ```bash
+   pytest test/
+   ```
+
+### Cloud Integration Tests (AWS)
+Because the cloud architecture is serverless, integration testing requires triggering live AWS events to verify the pipeline (S3 → Lambda → Rekognition → DynamoDB).
+1. Ensure your AWS credentials are configured locally via the AWS CLI or your .env file.
+2. Upload a test image to your S3 bucket to trigger the pipeline:
+   ```bash
+   aws s3 cp tests/sample_data/test_car.jpg s3://edgeguard-storage-short-992 /
+   ```
+3. Verify the execution by checking the AWS CloudWatch logs for your Lambda function, or query the DynamoDB table to ensure the metadata and AI labels were successfully written:
+   ```bash
+   aws dynamodb scan --table-name EdgeGuard_Events
+   ```
+
+### Web Dashboard Tests (React)
+To test the presentation layer:
+
+1. Navigate to the web application directory:
+   ```bash
+   cd code/dashboard
+   ```
+2. Run the frontend test suite (using Jest/React Testing Library):
+   ```bash
+   npm test
+   ```
+
+### Adding New Tests
+All developers are expected to write tests for new features to ensure our edge-to-cloud pipeline remains robust.
+
+Where to put tests: All Python tests must be placed inside the tests/ directory at the project root. React tests should be placed in code/dashboard/src/__tests__/.
+
+Naming Conventions: * Python: Test files must start with test_ (e.g., test_motion_detector.py). Test function names inside those files must also start with test_ (e.g., def test_cooldown_timer():).
+
+JavaScript/React: Test files should use the .test.js or .spec.js suffix (e.g., EventFeed.test.js).
+
+Test Harness: * Use pytest for all Python modules.
+
+Use Jest for the React Dashboard.
+
+Mocks: When testing AWS integration locally, use the moto library to mock boto3 calls so we do not exhaust our AWS Free Tier limits during automated CI/CD runs.
