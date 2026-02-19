@@ -1,9 +1,73 @@
+# EdgeGuard Hybrid Intelligence: User Manual
 
+This manual provides instructions to install, configure, and operate the EdgeGuard Hybrid Intelligence system.
 
+---
+
+## High-Level Description
+
+**EdgeGuard Hybrid Intelligence** is an automated security and monitoring solution designed to bridge the gap between local edge computing and cloud-based analytics. 
+
+When motion is detected, the system:
+* **Captures** the frame where the motion occurred.
+* **Uploads** the frame to an AWS S3 bucket.
+* **Prepares** the data for advanced cloud processing via Amazon Rekognition.
+
+This hybrid approach ensures that users only consume cloud bandwidth and storage when meaningful events occur, providing a cost-effective and responsive security layer.
+
+## How to Install the Software
+
+In order to use the EdgeGuard software, you must configure both your local environment and your AWS infrastructure.
+
+### Prerequisites
+  * **Python**: Version 3.8 or higher is recommended
+  * **Hardware**: A functional webcam or integrated camera.
+  * **AWS Account**: Access to an S3 Bucket and IAM credentials (Access Key ID and Secret Access Key).
+
+### Step-by-Step Installation
+  1) **Navigate to the project directory**:
+  ```bash
+  cd ~/EdgeGuard-Hybrid-Intelligence/code
+  ```
+  2) **Initialize Virtual Environment**:
+  ```bash
+  python3 -m venv env
+  source env/bin/activate
+  ```
+  3) **Install Libraries**:
+  ```bash
+  pip install boto3 python-dotenv opencv-python numpy
+  ```
+  4) **Configure Credentials**:
+     * Create a .env file in the project root to store your AWS details
+       * ```AWS_ACCESS_KEY_ID```
+       * ```AWS_SECRET_ACCESS_KEY```
+       * ```AWS_REGION``` (e.g., ```us-west-2```)
+       * ```S3_BUCKET_NAME```
+
+## How to Run the Software
+1) Activate the Environment: Ensure your virtual environment is active (source env/bin/activate
+2) Lanch the Motion Detection Engine:
+   * Run the following command:
+   ```bash
+   python3 motion_detection.py
+   ```
+3) System Operation:
+   * **Delta Window:** Displays the live mathematical difference between frames.
+   * **Camera Window:** Automatically displays the captured event when motion is detected.
+   * **Console Output:** Displays the S3 URL of the uploaded image (e.g., File live at: ```https://...```).
+4) Exit: Press the 'q' key while the camera window is focused to stop the program.
+
+## Work in Progress:
+As noted in the functional sections, the following features are currently under development
+  * **Background subtraction:** Not yet implemented in the main loop.
+  * **User UI:** Sensitivity sliders and zone-based filtering has not been implemented yet.
+  * **Dashboard:** Automated notifications and event filtering controls has not been implemented yet.
+  * **Automation:** A script to automatically compile all code and pre-reqs has not been implemented yet.
 
 ## How to Use the Software
 
-EdgeGuard Hybrid Intelligence captures motion from your camera feed, uploads relevant frames to the cloud, and analyzes them using AWS services. Here's how to interact with the system:
+**EdgeGuard Hybrid Intelligence** captures motion from your camera feed, uploads relevant frames to the cloud, and analyzes them using AWS services. Here's how to interact with the system:
 
 ### Motion Detection (Edge)
 
@@ -94,6 +158,7 @@ Thank you for helping improve **EdgeGuard Hybrid Intelligence**! To report a bug
 
 ## Known Bugs
 1. [motion_detection.py Fails to Upload Frame Due to NoneType Bucket in S3 Client] (https://github.com/3EEEs/EdgeGuard-Hybrid-Intelligence/issues/1)
+
 
 
 
