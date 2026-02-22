@@ -186,7 +186,9 @@ while True:
             last_motion_time = None
 
     # -----   RECORDING    -----
-    
+    fg_mask = fgbg.apply(frame)
+
+
     if recording:
         clip_frames.append((frame.copy(), fg_mask.copy()))
         if current_time - record_start_time >= CLIP_DURATION:
