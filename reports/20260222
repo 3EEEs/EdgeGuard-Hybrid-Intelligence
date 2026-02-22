@@ -1,0 +1,71 @@
+# Weekly Status Report: [Date 2026-02-22]
+
+**Team 7 Members:** Ethan Short, Calvin Grabowski, Michael Wilde, Sammuel Dressel
+
+---
+
+## 1. Team Report
+Some coding progress was made for integrating the cloud uploader logic. No testing has been made on it. The team was unable to meet this week due to conflicts with everyone's schedule, planning on meeting this upcoming week. 
+
+### A. Goals from Last Week
+* **Goal:** Split the work up for the project milestone 4 and have everyone complete their sections
+* **Goal:** Code completed and ready for testing
+* **Task:** Michael will work on documentation and help the others get caught up. 
+* **Task:** Ethan will set up AWS account, and Integrate the S3 upload script into the motion detection loop. (we didn't do these goals last week)
+* **Task** Samuel will set up a cooldown to prevent a spam of images being sent from the motion detector. (we didn't do these goals last week)
+* **Task** Calvin will make jpgs save when the motion is detected, and will create an AWS Lambda trigger that runs whenever a new image hits the S3 bucket. (we didn't do these goals last week)
+
+### B. Progress and Issues
+* **Progress:** Made a cooldown timer
+* **Progress:** Amazon S3 activates lmabda which sents the image from S3 to Amazon Rekognition which results in an abundance of information.
+* **Issue:** Amazon Rekognition doesn't just give us the thing that takes up the most space, but it gives results about every identifiable thing in the 
+* **Issue:** We need to figure out the best way to find the key character of the movement
+* **Issue:** we need to find a way to find what frame is the best to send to Amazon
+
+### C. Plans and Goals for Next Week
+*(High-level team goals. Tasks must be measurable.)*
+* **Goal:** Make the project deployable
+* **Goal:** Code completed and ready for testing
+* **Task:** Ethan and Michael will start working on the website to help display information
+* **Task** Calvin and Samuel will work on getting the correct frame sent to Amazon
+
+---
+
+## 2. Contributions of Individual Team Members
+
+### Ethan Short
+* **Goals from Last Week:** (Fourth week - Fifth week)
+   * Consilidate and deliver AWS API account information to deploy  
+* **Progress and Issues:**
+    * ___
+* **Plans and Goals for Next Week:**
+    * ___
+
+### Calvin Grabowski
+* **Goals from Last Week:** (Fourth week - Fifth week)
+    * Catch up by doing what I was supposed to do this week on the project:
+       * Save the motion as a jpg instead of just making an image of the motion appear on screen (Simple)
+       * Make a AWS Lambda Trigger that triggers wehnever an image hits the S3 bucket (complicated/requires others parts to work)
+* **Progress and Issues:**
+    * Did my part for the Project Milestone 4
+    * ___
+* **Plans and Goals for Next Week:**
+    * ___
+
+### Micheal Wilde
+* **Goals from Last Week:** (Fourth week - Fifth week)
+    * Work Project 4 Milestone
+    * Help out the others in the group with getting caught up
+* **Progress and Issues:**
+    * ___
+* **Plans and Goals for Next Week:**
+    * ___
+
+### Samuel Dressel
+* **Goals from Last Week:** (Fourth week - Fifth week)
+    * Work on cooldown timer and background subtraction
+    * Work with group to get caught up
+* **Progress and Issues:**
+    * ___
+* **Plans and Goals for Next Week:**
+    * ___
