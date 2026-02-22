@@ -49,7 +49,7 @@ def analyze_clips(frames):
     best_frame = None
     prev = None
 
-    for frame, fg_mask in frames:
+    for frame in frames:
 
         fg_mask = fgbg.apply(frame)
 
@@ -90,19 +90,19 @@ def analyze_clips(frames):
         if x < edge_margin or y < edge_margin or \
             x+w > frame_w - edge_margin or \
             y+h > frame_h - edge_margin:
-            edge_penalty = 4000
+            edge_penalty = 1000
 
         # ----- BLUR PENALTY -----
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         blur_score = cv2.Laplacian(gray, cv2.CV_64F).var()
 
         blur_penalty = 0
-        if blur_score < 120:
-            blur_penalty = 2500
+        if blur_score < 100:
+            blur_penalty = 300
 
         # ----- FINAL SCORE -----
         score = (
-            distance * 4
+            distance * 3.5
             - area * 0.00005
             + edge_penalty
             + blur_penalty

@@ -17,19 +17,19 @@ uploader = CloudUploader()
 cap = cv2.VideoCapture(0)
 
 # --- Background Subtractor (MOG2) ---
-fgbg = cv2.createBackgroundSubtractorMOG2(history=500, varThreshold=25, detectShadows=False)
+fgbg = cv2.createBackgroundSubtractorMOG2(history=500, varThreshold=25, detectShadows=True)
 
 # carries the previous frame to check for motion
 prev_gray = None
 
 # --- Motion Settings ---
 MOTION_THRESHOLD = 200         # Playing with this number
-SUSTAIN_TIME = 5               # Seconds before full clip recording
-MIN_MOTION_TIME = 0.3          # Ignore motion less than 0.3 sec
-CLIP_DURATION = 6              # Seconds
+SUSTAIN_TIME = 3               # Seconds before full clip recording
+MIN_MOTION_TIME = 0.3          # Ignore motion less than 1 sec
+CLIP_DURATION = 3              # Seconds
 CENTER_THRESHOLD = 50          # Pixels from center to stop early
 last_motion_time = None
-NO_MOTION_RESET_TIME = 0.2     # seconds allowed without motion
+NO_MOTION_RESET_TIME = 0.5     # seconds allowed without motion
 
 motion_start_time = None
 short_motion_saved = False
@@ -49,14 +49,13 @@ def analyze_clips(frames):
     best_frame = None
     prev = None
 
-    for frame, fg_mask in frames:
+    for frame in frames:
 
         fg_mask = fgbg.apply(frame)
 
         # Clean up noise
         fg_mask = cv2.threshold(fg_mask, 200, 255, cv2.THRESH_BINARY)[1]
         fg_mask = cv2.medianBlur(fg_mask, 5)
-        
         
         contours, _ = cv2.findContours(
             thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
@@ -67,9 +66,8 @@ def analyze_clips(frames):
 
         # Use largest contour (likely you)
         largest = max(contours, key=cv2.contourArea)
-        area = cv2.contourArea(largest)
 
-        if area < 4000:
+        if cv2.contourArea(largest) < 2000:
             continue
 
         x, y, w, h = cv2.boundingRect(largest)
@@ -83,33 +81,8 @@ def analyze_clips(frames):
             (object_center[1] - frame_center[1])**2
         )
 
-        # ----- EDGE PENALTY -----
-        edge_margin = 20
-        edge_penalty = 00
-
-        if x < edge_margin or y < edge_margin or \
-            x+w > frame_w - edge_margin or \
-            y+h > frame_h - edge_margin:
-            edge_penalty = 4000
-
-        # ----- BLUR PENALTY -----
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        blur_score = cv2.Laplacian(gray, cv2.CV_64F).var()
-
-        blur_penalty = 0
-        if blur_score < 120:
-            blur_penalty = 2500
-
-        # ----- FINAL SCORE -----
-        score = (
-            distance * 4
-            - area * 0.00005
-            + edge_penalty
-            + blur_penalty
-        )
-
-        if score < best_score:
-            best_score = score
+        if distance < best_score:
+            best_score = distance
             best_frame = frame
             
     return best_frame
@@ -188,7 +161,7 @@ while True:
     # -----   RECORDING    -----
     
     if recording:
-        clip_frames.append((frame.copy(), fg_mask.copy()))
+        clip_frames.append(frame.copy())
         if current_time - record_start_time >= CLIP_DURATION:
             print("Analyzing clip...")
             best_frame = analyze_clips(clip_frames)

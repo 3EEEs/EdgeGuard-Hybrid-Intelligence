@@ -5,10 +5,9 @@ IMPORTANT:
     - botocore.exceptions
     - dotenv
 - Install them by entering this:
-    - pip install boto3 # or do that through the requiremnts.txt
-    - pip install -r code/requirements.txt
+    - pip install boto3
 - Make sure to do:
-    - Change to where directory where EdgeGuard code is store ~/EdgeGuard-Hybrid-Intelligence/code
+    - Change to where directory where EdgeGaurd code is store ~/EdgeGuard-Hybrid-Intelligence/code
     - python3 -m venv env
     - source env/bin/activate
     - pip install boto3 python-dotenv

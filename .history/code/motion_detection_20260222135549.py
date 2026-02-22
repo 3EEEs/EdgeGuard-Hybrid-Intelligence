@@ -17,7 +17,7 @@ uploader = CloudUploader()
 cap = cv2.VideoCapture(0)
 
 # --- Background Subtractor (MOG2) ---
-fgbg = cv2.createBackgroundSubtractorMOG2(history=500, varThreshold=25, detectShadows=False)
+fgbg = cv2.createBackgroundSubtractorMOG2(history=500, varThreshold=25, detectShadows=True)
 
 # carries the previous frame to check for motion
 prev_gray = None
@@ -26,7 +26,7 @@ prev_gray = None
 MOTION_THRESHOLD = 200         # Playing with this number
 SUSTAIN_TIME = 5               # Seconds before full clip recording
 MIN_MOTION_TIME = 0.3          # Ignore motion less than 0.3 sec
-CLIP_DURATION = 6              # Seconds
+CLIP_DURATION = 9              # Seconds
 CENTER_THRESHOLD = 50          # Pixels from center to stop early
 last_motion_time = None
 NO_MOTION_RESET_TIME = 0.2     # seconds allowed without motion
@@ -49,7 +49,7 @@ def analyze_clips(frames):
     best_frame = None
     prev = None
 
-    for frame, fg_mask in frames:
+    for frame in frames:
 
         fg_mask = fgbg.apply(frame)
 
@@ -85,24 +85,24 @@ def analyze_clips(frames):
 
         # ----- EDGE PENALTY -----
         edge_margin = 20
-        edge_penalty = 00
+        edge_penalty = 200
 
         if x < edge_margin or y < edge_margin or \
             x+w > frame_w - edge_margin or \
             y+h > frame_h - edge_margin:
-            edge_penalty = 4000
+            edge_penalty = 500
 
         # ----- BLUR PENALTY -----
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         blur_score = cv2.Laplacian(gray, cv2.CV_64F).var()
 
         blur_penalty = 0
-        if blur_score < 120:
-            blur_penalty = 2500
+        if blur_score < 100:
+            blur_penalty = 300
 
         # ----- FINAL SCORE -----
         score = (
-            distance * 4
+            distance * 3.5
             - area * 0.00005
             + edge_penalty
             + blur_penalty
@@ -188,7 +188,7 @@ while True:
     # -----   RECORDING    -----
     
     if recording:
-        clip_frames.append((frame.copy(), fg_mask.copy()))
+        clip_frames.append(frame.copy())
         if current_time - record_start_time >= CLIP_DURATION:
             print("Analyzing clip...")
             best_frame = analyze_clips(clip_frames)
