@@ -282,78 +282,57 @@ Our current plan for the documentation style that we plan to create for our hybr
 3. **Project Governance**
    * Weekly Status Reports (/reports): Ongoing documentation of the project's health, following the YYYYMMDD.md format to document the team's progress and goals.
 
-**iii. Test Plan & Bugs**
+### **iii. Test Plan & Bugs**
 Our testing plan for EdgeGuard Hybrid Intelligence ensures that all components, workflows, and user interactions meet functional and non-functional requirements, including motion detection accuracy, cloud integration, latency, dashboard usability, and cost-saving logic.
-1. **Overview**
+
+1. **Overview & Infrastructure**
    * We plan to test across three levels: unit testing, system (integration) testing, and usability testing.
-   * Disciplined Approach: Define expected behaviors for each component and workflow, use automated tests for unit and system validation, structured observation for usability testing, log all bugs in GitHub Issues with reproducible steps and evidence, perform regression verification after fixes, and review outcomes weekly.
+   * **Disciplined Approach:** Define expected behaviors for each component and workflow, use automated tests for unit and system validation, structured observation for usability testing, log all bugs in GitHub Issues with reproducible steps and evidence, perform regression verification after fixes, and review outcomes weekly.
+   * **Test-Automation Infrastructure (Pytest):** We use Pytest for our Python components because it handles simple unit tests and complex functional testing with minimal boilerplate.
+   * **CI Service (GitHub Actions):** Our repository is linked via `.github/workflows/python-app.yml`. We chose GitHub Actions because it is natively integrated, offering faster response times and a cleaner interface for stopping/restarting builds.
+   * **How to Add a New Test:** Developers create a file with the `test_` prefix in the `/tests` directory and use Python `assert` statements; the CI service automatically detects and runs these on push/PR.
+   * **CI Service Comparison:**
+     | CI Service | Pros | Cons |
+     | :--- | :--- | :--- |
+     | **GitHub Actions** | Native to repo; easiest setup; fast response times. | Limited by GitHub's monthly minute quota. |
+     | **CircleCI** | Fast parallel builds; great Docker support. | Separate UI/Account required. |
+     | **Travis CI** | Industry standard; simple syntax. | Restrictive free tier; slower builds. |
 
-2. **Unit Testing**
-   * **Edge Motion Detection**
-     - Test frame differencing, background subtraction, and sensitivity thresholds
-     - Ensure motion is detected accurately and irrelevant motion is ignored
-     - Disciplined Approach: Use controlled input scenarios to validate motion detection behavior and log failures in GitHub Issues with expected vs. actual results.
-   * **S3 Upload Scripts**
-     - Verify frames are correctly uploaded to S3 and retries occur on failure
-     - Validate proper file naming and metadata format
-     - Disciplined Approach: Simulate upload successes and failures and log errors in GitHub Issues with request details and logs.
-   * **Lambda Triggers**
-     - Test that Lambda functions respond correctly to S3 events and invoke Rekognition
-     - Disciplined Approach: Trigger Lambda functions with test S3 events and log invocation or processing failures in GitHub Issues.
-   * **DynamoDB Writes**
-     - Ensure metadata is stored accurately (EventID, Timestamp, Labels, Confidence, Priority)
-     - Test concurrency by writing multiple events simultaneously
-     - Disciplined Approach: Validate database writes using known inputs and log schema or consistency errors in GitHub Issues.
-   * **AI Analysis Handling**
-     - Ensure labels are interpreted correctly and filtered per rules
-     - Disciplined Approach: Test label-handling logic with predefined Rekognition outputs and log rule violations in GitHub Issues.
+2. **Unit Testing (Automated via CI)**
+   * **Calvin (Motion):** Test `calculate_contour_area` logic to ensure specific pixel variance thresholds trigger detection.
+   * **Ethan (Cloud):** Test `generate_s3_key` function to ensure timestamps and device IDs are formatted correctly for storage.
+   * **Michael (Integration):** Test `RekognitionClient.parse_labels()` to ensure the JSON response from AWS is correctly converted to our internal data objects.
+   * **Samuel (Optimization):** Test `LabelFilter.is_relevant()` logic to ensure "environmental noise" (like shadows or trees) is correctly identified as False.
 
-3. **System (Integration) Testing**
-   * **Local-to-Cloud Workflow**
-     - Test motion detection → S3 upload → Lambda → Rekognition → DynamoDB → Dashboard
-     - Confirm images appear on the dashboard with correct labels and metadata
-     - Disciplined Approach: Execute full workflow tests and log failures at specific pipeline stages in GitHub Issues with system logs.
-   * **Drive-By Filtering**
-     - Validate that non-relevant street motion is filtered correctly
-     - Ensure relevant events trigger alerts and store metadata
-     - Disciplined Approach: Run controlled drive-by scenarios and log misclassifications in GitHub Issues with filtering context.
-   * **Burglary / High-Priority Detection**
-     - Test that motion at primary entry points triggers alerts and stores evidence
-     - Confirm confidence thresholds and armed-state logic
-     - Disciplined Approach: Verify alert escalation logic through simulated intrusion scenarios and log threshold failures in GitHub Issues.
-   * **Cooldown & Cost-Saving Logic**
-     - Test frame throttling during high-frequency motion
-     - Verify dashboard reflects frames skipped versus frames sent
-     - Disciplined Approach: Stress-test high-motion conditions and log throttling or reporting inconsistencies in GitHub Issues.
+3. **Validation Testing (Use-Case Specific)**
+   * **Calvin (Motion):** **Use Case 1 (Filtered Monitoring):** Verify that "Significant Motion" is correctly distinguished from "Background Noise" using a controlled test video.
+   * **Ethan (Cloud):** **Use Case 2 (Metadata Integrity):** Verify that all required fields (EventID, S3_URL, Timestamp) are present before a record is committed to the database.
+   * **Michael (Integration):** **Use Case 4 (Burglary/Threat Detection):** Verify that the system correctly identifies a "Person" label and assigns it "High Priority" status.
+   * **Samuel (Optimization):** **Use Case 3 (Street Drive-By):** Verify that objects identified in "Zone B" (the street) are successfully discarded without triggering a cloud notification.
 
-4. **Usability Testing**
-   * **Dashboard Navigation**
-     - Ensure images, timestamps, and labels are clear and accessible on desktop and mobile
-     - Disciplined Approach: Conduct task-based navigation tests and log usability friction points in GitHub Issues.
-   * **Configuration & Control**
-     - Test sensitivity sliders, zone selection, and settings persistence
-     - Disciplined Approach: Observe user configuration tasks and log confusion or failures in GitHub Issues.
-   * **Alerts & Notifications**
-     - Verify high-priority events trigger dashboard alerts and optional notifications
-     - Ensure filtered events do not generate false alerts
-     - Disciplined Approach: Test alert scenarios and log false positives or missed notifications in GitHub Issues.
+4. **Integration Testing (Component-to-Component)**
+   * **Calvin (Motion):** Test **VideoStream → MotionDetector**—ensure frames are passed without memory leaks or frame-rate drops.
+   * **Ethan (Cloud):** Test **S3 Upload → Lambda Trigger**—ensure that a successful file upload automatically invokes the processing script.
+   * **Michael (Integration):** Test **Lambda → DynamoDB**—ensure that once Rekognition finishes, the resulting data is written to the database without schema errors.
+   * **Samuel (Optimization):** Test **Sensitivity Slider → Motion Logic**—ensure that adjusting the UI slider variable actually updates the threshold used by the edge detection script.
 
-5. **Bug Tracking**
-   * All bugs from unit, system, and usability tests are logged in **GitHub Issues**
-   * Each issue includes:
-     - Title
-     - Steps to reproduce
-     - Expected vs. actual behavior
-     - Severity
-     - Logs or screenshots
-   * Issues are prioritized, assigned, and regression-tested after fixes to prevent reoccurrence
+5. **System Testing (Environment/End-to-End)**
+   * **Calvin (Motion):** **Cross-Platform Test:** Execute the edge script on a different OS (e.g., Linux vs. Windows) to ensure OpenCV and local dependencies remain consistent.
+   * **Ethan (Cloud):** **Network Resiliency Test:** Simulate a "Network Down" event during an active upload to verify the system logs the error and does not crash the local process.
+   * **Michael (Integration):** **UI/Dashboard Test:** Verify the React Web Dashboard successfully renders images from S3 and fetches data from DynamoDB in a mobile browser environment.
+   * **Samuel (Optimization):** **Performance/Stress Test:** Run a live simulation for 1 hour to measure the accuracy of "Estimated Cost Savings" data displayed on the dashboard compared to actual pings.
 
-6. **Sufficiency**
-   * Unit tests ensure correctness of individual modules
-   * System tests confirm end-to-end workflows meet functional requirements
-   * Usability tests validate that the system is intuitive and responsive
-   * GitHub Issues tracking ensures systematic, repeatable, and measurable testing
-   * Together, these test suites comprehensively cover functional and non-functional requirements
+6. **Bug Tracking & CI Triggers**
+   * **CI Build Triggers:** CI builds are triggered by any **Push** to the main branch or any **Pull Request**.
+   * **Issue Logging:** All bugs from unit, validation, integration, and system tests are logged in **GitHub Issues**.
+   * Each issue includes: Title, Steps to reproduce, Expected vs. actual behavior, Severity, and Logs or screenshots.
+
+7. **Sufficiency**
+   * Unit tests ensure correctness of individual modules.
+   * System tests confirm end-to-end workflows meet functional requirements.
+   * Usability/Validation tests validate that the system is intuitive and matches our original use cases.
+   * GitHub Issues tracking ensures systematic, repeatable, and measurable testing.
+   * Together, these test suites comprehensively cover functional and non-functional requirements.
 
 ## Use Cases (Functional Requirements):
 
