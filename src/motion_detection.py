@@ -10,7 +10,7 @@ OUTPUT_DIR = os.path.join(os.getcwd(), "imgs")
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # motion_detection code add-on
-from cloud_uploader import CloudUploader
+from .cloud_uploader import CloudUploader
 uploader = CloudUploader()
 
 # 0 means default camera, 1 or 2 means external camera
@@ -51,7 +51,7 @@ def analyze_clips(frames):
 
     for frame, fg_mask in frames:
 
-        fg_mask = fgbg.apply(frame)
+        # fg_mask = fgbg.apply(frame)
 
         # Clean up noise
         fg_mask = cv2.threshold(fg_mask, 200, 255, cv2.THRESH_BINARY)[1]

@@ -2,5 +2,10 @@
 env/
 venv/
 code/imgs/
+imgs/
 .history
 secret*
+
+__pycache__/
+**/__pycache__/
+*.pyc
