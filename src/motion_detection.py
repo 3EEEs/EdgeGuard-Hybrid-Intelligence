@@ -114,123 +114,134 @@ def analyze_clips(frames):
             
     return best_frame
 
+def process_frame(prev_gray_frame, current_gray_frame):
+    """
+    This function wraps the math you already wrote so the test can see it.
+    """
+    # This is the exact math from your loop
+    frame_delta = cv2.absdiff(prev_gray_frame, current_gray_frame)
+    thresh = cv2.threshold(frame_delta, 25, 255, cv2.THRESH_BINARY)[1]
+    motion_pixels = np.sum(thresh > 0)
+    
+    is_motion = motion_pixels > MOTION_THRESHOLD
+    return bool(motion_pixels > MOTION_THRESHOLD), int(motion_pixels)
 
 # ----  Main LOOP  -----
-
-# this makes the camera run continuously until I press q
-while True:
-    ret, frame = cap.read()
-    if not ret:
-        break
+if __name__ == "__main__":
+    # this makes the camera run continuously until I press q
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
+                
+            # cv2.imshow("Live Feed not gray", frame) # this is non blurred, non 
             
-        # cv2.imshow("Live Feed not gray", frame) # this is non blurred, non 
-        
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY) # converts the frames to be greay
-    gray = cv2.GaussianBlur(gray, (21,21), 0)   # blurs the frame
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY) # converts the frames to be greay
+        gray = cv2.GaussianBlur(gray, (21,21), 0)   # blurs the frame
+
+            
+        if prev_gray is None:
+            prev_gray = gray
+            continue
+
+        # grabs the diffrence between the frames
+        frame_delta = cv2.absdiff(prev_gray, gray)
+        thresh = cv2.threshold(frame_delta, 25, 255, cv2.THRESH_BINARY)[1]
+
+            
+        motion_pixels = np.sum(thresh > 0)
+        current_time = time.time()
+
+
+        # ----  MOTION DETECTED  ----
 
         
-    if prev_gray is None:
-        prev_gray = gray
-        continue
-
-    # grabs the diffrence between the frames
-    frame_delta = cv2.absdiff(prev_gray, gray)
-    thresh = cv2.threshold(frame_delta, 25, 255, cv2.THRESH_BINARY)[1]
-
+        if motion_pixels > MOTION_THRESHOLD:
         
-    motion_pixels = np.sum(thresh > 0)
-    current_time = time.time()
-
-
-    # ----  MOTION DETECTED  ----
-
-    
-    if motion_pixels > MOTION_THRESHOLD:
-    
-        last_motion_time = None
-        if motion_start_time is None:
-            motion_start_time = current_time
-            short_motion_saved = False
-
-        motion_duration = current_time - motion_start_time
-
-        # SHORT MOTION
-        if (
-            MIN_MOTION_TIME <= motion_duration < SUSTAIN_TIME
-            and not short_motion_saved
-        ):
-            print("Short motion detected")
-
-            filename = f"short_motion_{int(time.time())}.jpg"
-            full_path = os.path.join(OUTPUT_DIR, filename)
-
-            print("Saving frame to:", full_path)  # Debug confirmation
-            cv2.imwrite(full_path, frame)
-
-            short_motion_saved = True
-
-        # SUSTAINED MOTION
-        elif motion_duration >= SUSTAIN_TIME and not recording:
-            print("Sustained motion detected — recording clip")
-            recording = True
-            clip_frames = []
-            record_start_time = current_time
-
-    else:
-        if last_motion_time is None:
-            last_motion_time = current_time
-
-        if current_time - last_motion_time > NO_MOTION_RESET_TIME:
-            motion_start_time = None
-            short_motion_saved = False
             last_motion_time = None
+            if motion_start_time is None:
+                motion_start_time = current_time
+                short_motion_saved = False
 
-    # -----   RECORDING    -----
-    fg_mask = fgbg.apply(frame)
+            motion_duration = current_time - motion_start_time
 
+            # SHORT MOTION
+            if (
+                MIN_MOTION_TIME <= motion_duration < SUSTAIN_TIME
+                and not short_motion_saved
+            ):
+                print("Short motion detected")
 
-    if recording:
-        clip_frames.append((frame.copy(), fg_mask.copy()))
-        if current_time - record_start_time >= CLIP_DURATION:
-            print("Analyzing clip...")
-            best_frame = analyze_clips(clip_frames)
-
-            if best_frame is not None:
-                filename = f"capture_{int(time.time())}.jpg"
+                filename = f"short_motion_{int(time.time())}.jpg"
                 full_path = os.path.join(OUTPUT_DIR, filename)
 
                 print("Saving frame to:", full_path)  # Debug confirmation
-                cv2.imwrite(full_path, best_frame)
+                cv2.imwrite(full_path, frame)
 
-                print(f"Best frame saved locally: {filename}")
-                
-                # Upload to AWS via your choice
-                # TODO uncomment the AWS features
-                # url = uploader.upload_frame(filename)
+                short_motion_saved = True
 
-                # Delete local file to fill up local hardware 
-                # if url:
-                #     print(f"File live at: {url}")
-                #     os.remove(filename)
-                # last_upload_time = current_time  # Only now reset the cooldown
+            # SUSTAINED MOTION
+            elif motion_duration >= SUSTAIN_TIME and not recording:
+                print("Sustained motion detected — recording clip")
+                recording = True
+                clip_frames = []
+                record_start_time = current_time
 
-            recording = False
-            motion_start_time = None
+        else:
+            if last_motion_time is None:
+                last_motion_time = current_time
 
-    
-    # ----- update display -----
+            if current_time - last_motion_time > NO_MOTION_RESET_TIME:
+                motion_start_time = None
+                short_motion_saved = False
+                last_motion_time = None
 
-    cv2.imshow("Live", frame)
-    cv2.imshow("Delta", frame_delta)
-
-    prev_gray = gray            # moves the current frame to the previous frame holder
-    
+        # -----   RECORDING    -----
+        fg_mask = fgbg.apply(frame)
 
 
-    # currently ends the code when q is pressed
-    if cv2.waitKey(1) & 0xff == ord('q'):
-        break
+        if recording:
+            clip_frames.append((frame.copy(), fg_mask.copy()))
+            if current_time - record_start_time >= CLIP_DURATION:
+                print("Analyzing clip...")
+                best_frame = analyze_clips(clip_frames)
+
+                if best_frame is not None:
+                    filename = f"capture_{int(time.time())}.jpg"
+                    full_path = os.path.join(OUTPUT_DIR, filename)
+
+                    print("Saving frame to:", full_path)  # Debug confirmation
+                    cv2.imwrite(full_path, best_frame)
+
+                    print(f"Best frame saved locally: {filename}")
+                    
+                    # Upload to AWS via your choice
+                    # TODO uncomment the AWS features
+                    # url = uploader.upload_frame(filename)
+
+                    # Delete local file to fill up local hardware 
+                    # if url:
+                    #     print(f"File live at: {url}")
+                    #     os.remove(filename)
+                    # last_upload_time = current_time  # Only now reset the cooldown
+
+                recording = False
+                motion_start_time = None
+
+        
+        # ----- update display -----
+
+        cv2.imshow("Live", frame)
+        cv2.imshow("Delta", frame_delta)
+
+        prev_gray = gray            # moves the current frame to the previous frame holder
+        
 
 
-cap.release()
-cv2.destroyAllWindows()
+        # currently ends the code when q is pressed
+        if cv2.waitKey(1) & 0xff == ord('q'):
+            break
+
+
+    cap.release()
+    cv2.destroyAllWindows()
