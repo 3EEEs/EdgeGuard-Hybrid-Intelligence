@@ -81,7 +81,7 @@ pip install -r code/requirements.txt
 3. Run the main code
    
 ```bash
-python code/motion_detection.py
+python -m src.motion_detection
 ```
 
 ### Cloud Components (AWS)
@@ -203,3 +203,4 @@ Tag the Release: Create a release tag in GitHub (e.g., v1.0.0-beta) summarizing 
 Commit this to your `main` branch and you can check off the "Developer Documentation" requirement for the assignment! 
 
 You have less than two hours left. Would you like me to draft up the `docs/USER_MANUAL.m
+
