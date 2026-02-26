@@ -1,6 +1,6 @@
 import os
 import pytest
-from motion_detection import OUTPUT_DIR
+from src.motion_detection import OUTPUT_DIR
 
 def test_system_storage_readiness():
     """
@@ -18,3 +18,4 @@ def test_system_storage_readiness():
     
     assert os.path.exists(test_path), "System lacks write permissions to the image directory"
     os.remove(test_path) # Cleanup
+
