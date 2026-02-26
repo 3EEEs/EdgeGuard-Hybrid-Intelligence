@@ -1,5 +1,5 @@
 import pytest
-from motion_detection import MOTION_THRESHOLD
+from src.motion_detection import MOTION_THRESHOLD
 
 def test_motion_threshold_logic():
     """
@@ -12,3 +12,4 @@ def test_motion_threshold_logic():
     
     assert MOTION_THRESHOLD == 200, "Motion threshold has been modified from optimized value"
     assert noise_change < MOTION_THRESHOLD, "Threshold is too sensitive; will cause storage bloat"
+
