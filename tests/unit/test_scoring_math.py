@@ -1,7 +1,7 @@
 import pytest
 import numpy as np
 import cv2
-from motion_detection import analyze_clips
+from src.motion_detection import analyze_clips
 
 def test_analyze_clips_scoring():
     """
@@ -32,3 +32,4 @@ def test_analyze_clips_scoring():
     # 4. Validation
     assert result is not None, "Analyzer failed to return a frame"
     assert np.array_equal(result, good_frame), "Analyzer chose the wrong (lower quality) frame"
+
