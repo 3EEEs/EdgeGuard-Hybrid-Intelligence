@@ -1,5 +1,5 @@
 import pytest
-from cloud_uploader import CloudUploader
+from src.cloud_uploader import CloudUploader
 
 def test_uploader_initialization():
     """
@@ -11,3 +11,4 @@ def test_uploader_initialization():
     
     # Check if the bucket name was successfully loaded (Required for S3 integration)
     assert uploader.bucket_name is not None, "S3_BUCKET_NAME not found in environment"
+
