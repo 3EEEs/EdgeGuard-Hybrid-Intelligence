@@ -1,11 +1,45 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import DashboardLayout from "../layouts/DashboardLayout.astro";
+import Navbar from "../components/Navbar.astro";
+import StatusBar from "../components/StatusBar.astro";
+import LiveFeed from "../components/LiveFeed.astro";
+import EdgeLogicControl from "../components/EdgeLogicControl.astro";
+import MotionDetected from "../components/MotionDetected.astro";
+import CustomPanel from "../components/CustomPanel.astro";
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<DashboardLayout title="EdgeGuard Dashboard">
+  <Navbar slot="navbar" />
+
+  <StatusBar awsStatus="OK" used={42} max={100} />
+
+  <div class="grid">
+    <LiveFeed />
+    <EdgeLogicControl />
+    <MotionDetected timestamp="2026-03-03 08:33" />
+    <CustomPanel title="Shortcut Panel" />
+  </div>
+</DashboardLayout>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+
+    gap: 0.75rem;
+
+    /* this is the key: fits the grid inside the viewport */
+    height: calc(100vh - 130px);
+
+    width: 100%;
+  }
+
+  .grid > * {
+    min-height: 0;
+    height: 100%;
+  }
+</style>
+
+
+

@@ -1,0 +1,24 @@
+---
+const { awsStatus = "OK", used = 42, max = 100 } = Astro.props;
+---
+
+<div class="status-bar">
+  <div>AWS Status: <span class="value">{awsStatus}</span></div>
+  <div>Cloud Budget: <span class="value">${used}/{max}</span></div>
+</div>
+
+<style>
+  .status-bar {
+    display: flex;
+    gap: 2rem;
+    background: #1a1d24;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid #2a2d34;
+    font-size: 1rem;
+  }
+
+  .value {
+    font-weight: 600;
+  }
+</style>
