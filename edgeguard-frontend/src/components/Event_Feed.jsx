@@ -1,47 +1,63 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import EventCard from './Event_Card.jsx';
+import Event_Card from './Event_Card.jsx';
 
-const EventFeed = () => {
+const Event_Feed = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetching data from the Cloud (DynamoDB)
+  // The panel style
+  const panelStyle = {
+    backgroundColor: '#1a1d23',
+    border: '1px solid #2d333b',
+    borderRadius: '8px',
+    padding: '20px',
+    height: '90%',
+    display: 'flex',
+    flexDirection: 'column',
+    color: '#f0f6fc',
+    overflowY: 'auto'
+  };
+
   const fetchEvents = async () => {
     try {
-      // Fetch from your API Gateway endpoint that triggers a Lambda 
-      // to scan your DynamoDB 'EventID' and 'Timestamp' fields
+      // Integration: Fetching from Ethan's API Gateway
       const response = await axios.get('YOUR_AWS_API_GATEWAY_URL');
       setEvents(response.data);
       setLoading(false);
     } catch (error) {
-      console.error("Error fetching EdgeGuard events:", error);
+      console.error("Error fetching motion events:", error);
     }
   };
 
   useEffect(() => {
     fetchEvents();
-    // Non-Functional Requirement: 10-second latency check
-    const interval = setInterval(fetchEvents, 10000); 
+    // Non-functional Requirement: 10-second latency check
+    const interval = setInterval(fetchEvents, 10000);
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <div className="container mt-4">
-      <h2>Recent Detections</h2>
-      {loading ? (
-        <p>Loading motion events...</p>
-      ) : (
-        <div className="row">
-          {events.map(event => (
-            <div className="col-md-4 mb-3" key={event.EventID}>
-              <EventCard event={event} />
-            </div>
-          ))}
-        </div>
-      )}
+    <div style={panelStyle}>
+      <div style={{ borderBottom: '1px solid #2d333b', marginBottom: '20px', paddingBottom: '10px' }}>
+        <h3 style={{ margin: 0, fontSize: '1.2rem' }}>Recent Detections</h3>
+      </div>
+
+      <div className="feed-content">
+        {loading ? (
+          <p style={{ color: '#8b949e' }}>Loading motion events...</p>
+        ) : events.length === 0 ? (
+          <p style={{ color: '#8b949e' }}>No recent motion detected.</p>
+        ) : (
+          <div style={{ display: 'grid', gap: '15px' }}>
+            {events.map((event) => (
+              <Event_Card key={event.EventID} event={event} />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
 
-export default EventFeed;
+export default Event_Feed;
