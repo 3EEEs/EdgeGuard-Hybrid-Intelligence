@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import EventCard from './EventCard';
+import EventCard from './Event_Card.jsx';
 
 const EventFeed = () => {
   const [events, setEvents] = useState([]);
