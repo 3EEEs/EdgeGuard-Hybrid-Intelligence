@@ -1,0 +1,26 @@
+---
+const { timestamp = "2026-03-03 08:33" } = Astro.props;
+---
+
+<div class="panel">
+  <h2>Motion Detected</h2>
+  <p>{timestamp}</p>
+
+  <div class="motion-box">[ motion snapshot ]</div>
+</div>
+
+<style>
+  .panel {
+    background: #1a1d24;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid #2a2d34;
+  }
+
+  .motion-box {
+    height: 200px;
+    background: #0f1116;
+    border: 1px solid #2a2d34;
+    border-radius: 6px;
+  }
+</style>
