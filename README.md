@@ -179,25 +179,7 @@ npm run dev
 Open your browser and navigate to http://localhost:4321 to view the dashboard.
 
 Step 2: Start the Edge Camera
-In your edge-client terminal (with your virtual environment activated), run the main script:
-
-cd edge-client
-python main.py
-A webcam window will open. Move in front of the camera to trigger the motion detection. Check the web dashboard to see your captured frame appear!
-
-3. Testing the System
-We have automated testing set up for both the Python backend and the JavaScript frontend.
-
-Running Python Unit Tests (Edge/Cloud)
-
-cd edge-client
-pytest
-Running Frontend Linting & Build Tests
-
-cd web-frontend
-npm run lint
-npm run build
-
+In the main folder run the following commands below for the backend.
 
 # Running Backend
 
