@@ -197,3 +197,18 @@ Running Frontend Linting & Build Tests
 cd web-frontend
 npm run lint
 npm run build
+
+
+# Running Backend
+### Local Edge (Python)
+1. Ensure Python 3.10+ is installed.
+2. Install required packages:
+   
+```bash
+pip install -r code/requirements.txt
+```
+3. Run the main code
+   
+```bash
+python -m src.motion_detection
+```
