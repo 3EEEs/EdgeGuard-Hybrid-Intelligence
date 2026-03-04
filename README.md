@@ -197,7 +197,3 @@ Running Frontend Linting & Build Tests
 cd web-frontend
 npm run lint
 npm run build
-Beta Testing Feedback
-For CS 362 Classmates: Thank you for testing EdgeGuard! Please follow the setup instructions above. Once you have tested Use Case 1, please drop your completed feedback document into the /beta-testing folder in this repository, or open an Issue using our bug tracking template.
-
-Good luck with your 4 PM beta testing session! Would you like me to go ahead and write that initial `p
