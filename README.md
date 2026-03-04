@@ -200,6 +200,33 @@ npm run build
 
 
 # Running Backend
+
+3. Create an environment
+  
+  #### Windows Powershell
+  - **Create enviroment (optional):**
+    
+    ```bash 
+    python -m venv env 
+    ```
+  - **Run Environment:**
+    
+    ```bash 
+    ./env/Scripts/activate
+    ```
+
+  #### Linux/macOS 
+  - **Create enviroment (optional):**
+
+    ```bash 
+    python3 -m venv env
+    ```
+  - **Run Envrionment:**
+    
+    ```bash 
+    source env/bin/activate
+    ```
+
 ### Local Edge (Python)
 1. Ensure Python 3.10+ is installed.
 2. Install required packages:
