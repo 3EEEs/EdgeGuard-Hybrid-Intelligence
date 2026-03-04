@@ -201,7 +201,7 @@ npm run build
 
 # Running Backend
 
-3. Create an environment
+Create an environment
   
   #### Windows Powershell
   - **Create enviroment (optional):**
