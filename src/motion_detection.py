@@ -1,9 +1,10 @@
 import os
 import time
+import threading
 
 import cv2
 import numpy as np
-from flask import Flask, Response
+from flask import Flask, Response, request, jsonify
 from flask_cors import CORS
 
 # Flask Setup
@@ -47,6 +48,24 @@ NO_MOTION_RESET_TIME = 0.2  # seconds allowed without motion
 # Cooldown timer settings
 UPLOAD_COOLDOWN = 0.015  # seconds between uploads
 last_upload_time = 0  # timestamp of last upload
+
+
+# ---- Threshold Endpoints ----
+@app.route("/set_threshold", methods=["POST"])
+def set_threshold():
+    global MOTION_THRESHOLD
+    data = request.get_json()
+    if data is None or "threshold" not in data:
+        return jsonify({"error": "Missing threshold value"}), 400
+    threshold = int(data["threshold"])
+    threshold = max(50, min(400, threshold))
+    MOTION_THRESHOLD = threshold
+    print(f"[EdgeGuard] MOTION_THRESHOLD set to {MOTION_THRESHOLD}")
+    return jsonify({"status": "ok", "motion_threshold": MOTION_THRESHOLD})
+
+@app.route("/get_threshold", methods=["GET"])
+def get_threshold():
+    return jsonify({"motion_threshold": MOTION_THRESHOLD})
 
 
 def analyze_clips(frames):
@@ -132,6 +151,7 @@ def generate_frames():
     """
     global prev_gray, motion_start_time, short_motion_saved
     global recording, clip_frames, last_motion_time, record_start_time
+    global MOTION_THRESHOLD  # allows Flask endpoint updates to be seen here
 
     while True:
         ret, frame = cap.read()
@@ -217,6 +237,17 @@ def generate_frames():
                 motion_start_time = None
 
         prev_gray = gray  # moves current frame to previous frame holder
+
+        # ----- Overlay threshold + live motion pixel count -----
+        cv2.putText(
+            frame,
+            f"Threshold: {MOTION_THRESHOLD}  Motion: {int(motion_pixels)}",
+            (10, 30),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.7,
+            (0, 255, 0) if motion_pixels > MOTION_THRESHOLD else (200, 200, 200),
+            2
+        )
 
         # ----- FLASK WEB STREAMING -----
         # Encode the frame into a JPEG for the browser
