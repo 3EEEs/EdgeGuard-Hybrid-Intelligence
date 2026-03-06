@@ -48,7 +48,7 @@ The project is organized as follows:
 ```bash
 EdgeGuard-Hybrid-Intelligence/
 │
-├── code/                   # All source code (Edge + Cloud scripts)
+├── src/                   # All source code (Edge + Cloud scripts)
 ├── docs/                   # Developer & User documentation
 ├── reports/                # Weekly progress reports
 ├── tests/                  # Unit and integration tests
@@ -59,7 +59,7 @@ EdgeGuard-Hybrid-Intelligence/
 
  
 
-- **Source files:** `code/`  
+- **Source files:** `src/`  
 - **Tests:** `tests/` 
 - **Documentation:** `docs/`  
 - **Reports:** `reports/`  
@@ -203,5 +203,6 @@ Tag the Release: Create a release tag in GitHub (e.g., v1.0.0-beta) summarizing 
 Commit this to your `main` branch and you can check off the "Developer Documentation" requirement for the assignment! 
 
 You have less than two hours left. Would you like me to draft up the `docs/USER_MANUAL.m
+
 
 
