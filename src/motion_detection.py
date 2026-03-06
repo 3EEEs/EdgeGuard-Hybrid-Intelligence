@@ -60,7 +60,6 @@ def set_threshold():
     threshold = int(data["threshold"])
     threshold = max(50, min(400, threshold))
     MOTION_THRESHOLD = threshold
-    print(f"[EdgeGuard] MOTION_THRESHOLD set to {MOTION_THRESHOLD}")
     return jsonify({"status": "ok", "motion_threshold": MOTION_THRESHOLD})
 
 @app.route("/get_threshold", methods=["GET"])
