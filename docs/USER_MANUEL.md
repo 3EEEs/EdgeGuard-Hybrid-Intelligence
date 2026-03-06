@@ -27,7 +27,7 @@ In order to use the EdgeGuard software, you must configure both your local envir
 ### Step-by-Step Installation
   1) **Navigate to the project directory**:
   ```bash
-  cd ~/EdgeGuard-Hybrid-Intelligence/code
+  cd ~/EdgeGuard-Hybrid-Intelligence/src
   ```
   2) **Initialize Virtual Environment**:
   ```bash
@@ -36,7 +36,7 @@ In order to use the EdgeGuard software, you must configure both your local envir
   ```
   3) **Install Libraries**:
   ```bash
-  pip install boto3 python-dotenv opencv-python numpy
+  pip install boto3 python-dotenv opencv-python numpy flask flask-cors
   ```
   4) **Configure Credentials**:
      * Create a .env file in the project root to store your AWS details
@@ -158,6 +158,7 @@ Thank you for helping improve **EdgeGuard Hybrid Intelligence**! To report a bug
 
 ## Known Bugs
 1. [motion_detection.py Fails to Upload Frame Due to NoneType Bucket in S3 Client] (https://github.com/3EEEs/EdgeGuard-Hybrid-Intelligence/issues/1)
+
 
 
 
