@@ -1,20 +1,31 @@
+---
+// LiveFeed.astro
+---
+
 <div class="panel">
-  <h2>Live Feed</h2>
-  <div class="feed-box">[ live video feed placeholder ]</div>
+    <h2>Live Feed</h2>
+
+    <img
+        src="http://127.0.0.1:5000/video_feed"
+        alt="EdgeGuard Live Feed"
+        class="feed-box"
+    />
 </div>
 
 <style>
-  .panel {
-    background: #1a1d24;
-    padding: 1rem;
-    border-radius: 8px;
-    border: 1px solid #2a2d34;
-  }
+    .panel {
+        background: #1a1d24;
+        padding: 1rem;
+        border-radius: 8px;
+        border: 1px solid #2a2d34;
+    }
 
-  .feed-box {
-    height: 250px;
-    background: #0f1116;
-    border: 1px solid #2a2d34;
-    border-radius: 6px;
-  }
+    .feed-box {
+        height: 250px;
+        width: 100%;
+        background: #0f1116;
+        border: 1px solid #2a2d34;
+        border-radius: 6px;
+        object-fit: cover; /* Keeps the aspect ratio nice */
+    }
 </style>
