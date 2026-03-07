@@ -18,9 +18,9 @@ Google Doc: [Project Deliverable 1](https://docs.google.com/presentation/d/1xFuj
 
 Google Doc: [Midterm](https://docs.google.com/presentation/d/1DOCeAFsl3dXq1LxO6fRHvyV8NQJbfB0Ctzz7V4p3Yb0/edit)
 
-Report Format: [Link](https://canvas.oregonstate.edu/courses/2026970/assignments/10302739)\
+Report Format: [Link](https://canvas.oregonstate.edu/courses/2026970/assignments/10302739)
 
-Final Poster: [Link](https://docs.google.com/presentation/d/1Fx25utaVC8NyI5jXT1sFwNXi_GujuaT2ZdFsgWO9Pxc/edit?usp=sharing)
+Google Doc: [Final Poster](https://docs.google.com/presentation/d/1Fx25utaVC8NyI5jXT1sFwNXi_GujuaT2ZdFsgWO9Pxc/edit?usp=sharing)
 
 ## Communication Plan
 
