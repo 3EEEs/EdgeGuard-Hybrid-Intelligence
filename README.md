@@ -154,36 +154,6 @@ Because this is a hybrid architecture, you need to install dependencies for both
 Open your terminal and navigate to the edge client directory:
 cd edge-client
 # It is highly recommended to use a virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows use: venv\Scripts\activate
-
-# Install required Python packages (OpenCV, Boto3, etc.)
-pip install -r requirements.txt
-
-B. Web Dashboard (Astro/React)
-Open a new terminal window and navigate to the frontend directory:
-
-Bash
-cd web-frontend
-
-# Install Node modules
-npm install
-2. Running the System
-To see the full system work, you need to run the web dashboard and the edge camera script simultaneously.
-
-Step 1: Start the Web Dashboard
-In your web-frontend terminal, start the development server:
-
-cd web-frontend
-npm run dev
-Open your browser and navigate to http://localhost:4321 to view the dashboard.
-
-Step 2: Start the Edge Camera
-In the main folder run the following commands below for the backend.
-
-# Running Backend
-
-Create an environment
   
   #### Windows Powershell
   - **Create enviroment (optional):**
@@ -221,3 +191,38 @@ pip install -r src/requirements.txt
 ```bash
 python -m src.motion_detection
 ```
+
+
+B. Web Dashboard (Astro/React)
+Open a new terminal window and navigate to the frontend directory:
+
+Bash
+cd web-frontend
+
+
+# Install Node modules
+npm install
+2. Running the System
+To see the full system work, you need to run the web dashboard and the edge camera script simultaneously.
+
+Step 1: Start the Web Dashboard
+In your web-frontend terminal, start the development server:
+
+cd web-frontend
+npm run dev
+Open your browser and navigate to http://localhost:4321 to view the dashboard.
+
+Step 2: Start the Edge Camera
+In the main folder run the following commands below for the backend.
+
+
+
+#### Caution
+
+* Our program runs your computer's default camera
+  
+* If you have your computer connected to any outside cameras be aware if they are set to default
+
+* Likewise if you are on a mac the computer could connect to your phone and use that camera instead. If that's what you want, great, but just check what cameras you have connected if you aren't able to see through the camera that you thought you were going to
+
+
