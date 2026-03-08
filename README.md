@@ -186,35 +186,28 @@ cd edge-client
 ```bash
 pip install -r src/requirements.txt
 ```
-3. Run the main code
+
+ ```bash
+npm install
+ ```
+
+### Then in two seperate terminals run the frontend and the backend
+
+To see the full system work, you need to run the web dashboard and the edge camera script simultaneously.
+
+1. run the front end
+```bash
+npm run dev
+```
+
+Open/use a new terminal window and navigate to the frontend directory:
+2. Run the main code
    
 ```bash
 python -m src.motion_detection
 ```
 
-
-B. Web Dashboard (Astro/React)
-Open a new terminal window and navigate to the frontend directory:
-
-Bash
-cd web-frontend
-
-
-# Install Node modules
-npm install
-2. Running the System
-To see the full system work, you need to run the web dashboard and the edge camera script simultaneously.
-
-Step 1: Start the Web Dashboard
-In your web-frontend terminal, start the development server:
-
-cd web-frontend
-npm run dev
 Open your browser and navigate to http://localhost:4321 to view the dashboard.
-
-Step 2: Start the Edge Camera
-In the main folder run the following commands below for the backend.
-
 
 
 #### Caution
