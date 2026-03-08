@@ -5,6 +5,7 @@ import Event_Card from './Event_Card.jsx';
 const Event_Feed = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null); // Added to track connection issues
 
   // The panel style
   const panelStyle = {
@@ -21,12 +22,16 @@ const Event_Feed = () => {
 
   const fetchEvents = async () => {
     try {
-      // Integration: Fetching from Ethan's API Gateway
+      // TODO: Replace with Ethan's actual AWS API Gateway URL
       const response = await axios.get('YOUR_AWS_API_GATEWAY_URL');
       setEvents(response.data);
-      setLoading(false);
+      setError(null); 
     } catch (error) {
       console.error("Error fetching motion events:", error);
+      setError("Unable to connect to the event service.");
+    } finally {
+      // This ensures the "Loading..." text disappears regardless of success or failure
+      setLoading(false); 
     }
   };
 
@@ -46,6 +51,8 @@ const Event_Feed = () => {
       <div className="feed-content">
         {loading ? (
           <p style={{ color: '#8b949e' }}>Loading motion events...</p>
+        ) : error ? (
+          <p style={{ color: '#f85149' }}>{error}</p>
         ) : events.length === 0 ? (
           <p style={{ color: '#8b949e' }}>No recent motion detected.</p>
         ) : (
