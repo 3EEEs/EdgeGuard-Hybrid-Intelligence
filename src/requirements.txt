@@ -5,3 +5,7 @@ python-dotenv
 pytest
 psutil
 axios
+
+# Web Server & API
+flask
+flask-cors
