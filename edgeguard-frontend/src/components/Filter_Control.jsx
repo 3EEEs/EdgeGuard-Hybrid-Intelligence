@@ -2,10 +2,40 @@ import React, { useState, useEffect } from 'react';
 
 const BACKEND_URL = 'http://127.0.0.1:5000';
 
+const selectStyle = {
+  width: '100%',
+  padding: '8px',
+  backgroundColor: '#0d1117',
+  color: '#f0f6fc',
+  border: '1px solid #30363d',
+  borderRadius: '6px',
+  cursor: 'pointer'
+};
+
 const Filter_Control = ({ onFilterChange }) => {
 
   const [threshold, setThreshold] = useState(200);
   const [syncStatus, setSyncStatus] = useState('idle');
+
+  const [logAll, setLogAll] = useState(true);
+
+  const handleCloudSyncChange = async (e) => {
+    const isEnabled = e.target.value === "true";
+    setLogAll(isEnabled);
+    setSyncStatus('syncing');
+
+    try {
+      const res = await fetch(`${BACKEND_URL}/set_logging_mode`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ log_all: isEnabled }),
+      });
+      if (!res.ok) throw new Error();
+      setSyncStatus('ok');
+    } catch {
+      setSyncStatus('error');
+    }
+  };
 
   useEffect(() => {
     fetch(`${BACKEND_URL}/get_threshold`)
@@ -79,6 +109,21 @@ const Filter_Control = ({ onFilterChange }) => {
             value={threshold}
             onChange={handleSensitivityChange}
           />
+        </div>
+
+        {/* ---  Cloud Sync Dropdown --- */}
+        <div className="filter-group" style={{ marginBottom: '20px' }}>
+          <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.9rem' }}>
+            Cloud Cost Management:
+          </label>
+          <select
+            style={selectStyle} // Reuse your select styles
+            value={logAll.toString()}
+            onChange={handleCloudSyncChange}
+          >
+            <option value="true">Log All Motions ($$$)</option>
+            <option value="false">Sustained Motions Only ($)</option>
+          </select>
         </div>
 
         {/* UI Filtering Dropdown */}

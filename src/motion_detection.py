@@ -7,6 +7,23 @@ import numpy as np
 from flask import Flask, Response, request, jsonify
 from flask_cors import CORS
 
+
+# Add at top with other settings
+LOG_ALL_MOTIONS = True 
+
+
+# Flask Setup
+app = Flask(__name__)
+CORS(app)
+
+@app.route("/set_logging_mode", methods=["POST"])
+def set_logging_mode():
+    global LOG_ALL_MOTIONS
+    data = request.get_json()
+    LOG_ALL_MOTIONS = bool(data.get("log_all", True))
+    print(f"Logging mode updated: {LOG_ALL_MOTIONS}")
+    return jsonify({"status": "ok", "log_all": LOG_ALL_MOTIONS})
+
 class BudgetTracker:
     def __init__(self, limit=200.000):
         self.limit = limit
@@ -18,10 +35,6 @@ class BudgetTracker:
         return self.spent
 
 tracker = BudgetTracker(limit=200.000)
-
-# Flask Setup
-app = Flask(__name__)
-CORS(app)
 
 # Create imgs folder inside /code if it doesn't exist
 OUTPUT_DIR = os.path.join(os.getcwd(), "imgs")
@@ -198,6 +211,10 @@ def generate_frames():
                 and not short_motion_saved
             ):
                 print("Short motion detected")
+                if LOG_ALL_MOTIONS:
+                    tracker.log_upload()
+                    # TODO add the aws section
+                    
                 filename = f"short_motion_{int(time.time())}.jpg"
                 full_path = os.path.join(OUTPUT_DIR, filename)
 
