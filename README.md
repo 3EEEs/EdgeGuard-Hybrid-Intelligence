@@ -197,12 +197,11 @@ To see the full system work, you need to run the web dashboard and the edge came
 
 1. run the front end
 ```bash
+cd edgeguard-frontend
 npm run dev
 ```
 
-Open/use a new terminal window and navigate to the frontend directory:
-2. Run the main code
-   
+2. Run the backend in the main directory
 ```bash
 python -m src.motion_detection
 ```

@@ -59,7 +59,7 @@ const Filter_Control = ({ onFilterChange }) => {
   return (
     <div style={panelStyle}>
       <div style={headerStyle}>
-        <h3 style={{ margin: 0, fontSize: '1.2rem' }}>Edge Logic Control</h3>
+        <h3 style={{ margin: 0, fontSize: '1.2rem' }}>Sensitivity Slider and Filter Menu</h3>
         <span style={{ fontSize: '0.75rem', color: statusColor }}>{statusLabel}</span>
       </div>
 
@@ -67,9 +67,9 @@ const Filter_Control = ({ onFilterChange }) => {
         {/* Risk Mitigation: Sensitivity Slider */}
         <div style={{ marginBottom: '25px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-            <span style={{ fontSize: '0.9rem', color: '#8b949e' }}>Easy (50)</span>
+            <span style={{ fontSize: '0.9rem', color: '#8b949e' }}>High (50)</span>
             <span style={{ fontWeight: 'bold', color: '#58a6ff' }}>{threshold} px</span>
-            <span style={{ fontSize: '0.9rem', color: '#8b949e' }}>Hard (400)</span>
+            <span style={{ fontSize: '0.9rem', color: '#8b949e' }}>Low (400)</span>
           </div>
           <input
             type="range"
