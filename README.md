@@ -201,9 +201,7 @@ cd edgeguard-frontend
 npm run dev
 ```
 
-Open/use a new terminal window and navigate to the frontend directory:
-2. Run the main code
-   
+2. Run the backend in the main directory
 ```bash
 python -m src.motion_detection
 ```
