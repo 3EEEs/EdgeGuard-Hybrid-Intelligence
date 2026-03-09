@@ -30,12 +30,12 @@ In order to use the EdgeGuard software, you must configure both your local envir
   cd ~/EdgeGuard-Hybrid-Intelligence/src
   ```
   2) **Initialize Virtual Environment**:
-  - ** Linux/macOS **
+  - **Linux/macOS:**
   ```bash
   python3 -m venv env
   source env/bin/activate
   ```
-  - ** Windows **
+  - **Windows:**
   ```bash
   python3 -m venv env
   ./env/Scripts/activate
@@ -165,6 +165,7 @@ Thank you for helping improve **EdgeGuard Hybrid Intelligence**! To report a bug
 
 ## Known Bugs
 1. [motion_detection.py Fails to Upload Frame Due to NoneType Bucket in S3 Client] (https://github.com/3EEEs/EdgeGuard-Hybrid-Intelligence/issues/1)
+
 
 
 
