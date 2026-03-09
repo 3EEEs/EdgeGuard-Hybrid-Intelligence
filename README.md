@@ -185,7 +185,7 @@ cd edge-client
 python run_project.py
 ```
 
-### If that doesn't work you can check these steps to see check for missing dependencies
+# If that doesn't work check these steps to see missing dependencies
 1. Ensure Python 3.10+ is installed.
 2. Install required packages:
    
@@ -197,7 +197,7 @@ pip install -r src/requirements.txt
 npm install
  ```
 
-### And if you want to run them independently or start them seperately
+## And if you want to run them independently or start them seperately
 
 To see the full system work, you need to run the web dashboard and the edge camera script simultaneously.
 
