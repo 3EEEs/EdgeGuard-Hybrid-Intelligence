@@ -197,6 +197,7 @@ To see the full system work, you need to run the web dashboard and the edge came
 
 1. run the front end
 ```bash
+cd edgeguard-frontend
 npm run dev
 ```
 
