@@ -71,7 +71,7 @@ const Filter_Control = ({ onFilterChange }) => {
     border: '1px solid #2d333b', // Subtle border for definition
     borderRadius: '8px',
     padding: '20px',
-    height: '90%',
+    height: '87.1%',
     display: 'flex',
     flexDirection: 'column',
     color: '#f0f6fc'

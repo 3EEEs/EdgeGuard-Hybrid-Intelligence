@@ -3,7 +3,6 @@ import DashboardLayout from "../layouts/DashboardLayout.astro";
 import Navbar from "../components/Navbar.astro";
 import StatusBar from "../components/StatusBar.astro";
 import LiveFeed from "../components/LiveFeed.astro";
-import CustomPanel from "../components/CustomPanel.astro";
 
 // 1. Import your new React components
 import Filter_Control from "../components/Filter_Control.jsx";
@@ -20,10 +19,11 @@ import Event_Feed from "../components/Event_Feed.jsx";
     
     <Filter_Control client:load />
 
-    <Event_Feed client:load />
+    <div class="recent-detections">
+      <Event_Feed client:load />
+    </div>
     
-    <CustomPanel title="Shortcut Panel" />
-  </div>
+    </div>
 </DashboardLayout>
 
 <style>
@@ -31,9 +31,14 @@ import Event_Feed from "../components/Event_Feed.jsx";
   .grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
+    /* We keep 2 rows, but the bottom one will now be unified */
+    grid-template-rows: auto 1fr; 
     gap: 0.75rem;
     height: calc(100vh - 130px);
     width: 100%;
+  }
+
+  .recent-detections {
+    grid-column: 1 / -1; /* This forces it to take up the whole bottom area */
   }
 </style>
