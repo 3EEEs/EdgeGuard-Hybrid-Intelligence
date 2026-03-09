@@ -5,6 +5,7 @@ code/imgs/
 imgs/
 .history
 secret*
+.env
 
 __pycache__/
 **/__pycache__/

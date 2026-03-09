@@ -1,20 +1,60 @@
 import os
 import time
+import json
 import threading
+import boto3
 
 import cv2
 import numpy as np
+from decimal import Decimal
 from flask import Flask, Response, request, jsonify
 from flask_cors import CORS
+from .cloud_uploader import CloudUploader
 
-
-# Add at top with other settings
+# --- Global Settings ---
 LOG_ALL_MOTIONS = True 
 
-
-# Flask Setup
+# --- Flask Setup ---
 app = Flask(__name__)
 CORS(app)
+
+# --- Helper Functions ---
+# Helper to fix DynamoDB's Decimals so Flask can convert them to JSON
+def decimal_default(obj):
+    if isinstance(obj, Decimal):
+        return float(obj)
+    raise TypeError
+
+# ---- Flask Endpoints ----
+@app.route("/get_events", methods=["GET"])
+def get_events():
+    try:
+        # Connect to DynamoDB
+        dynamodb = boto3.resource(
+            'dynamodb',
+            region_name=os.getenv('AWS_REGION', 'us-west-2'),
+            aws_access_key_id=os.getenv('AWS_ACCESS_KEY_ID'),
+            aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY')
+        )
+        table = dynamodb.Table('Edgeguard_Events')
+        
+        # Scan the table (Note: Scan is fine for beta, but for production, 
+        # you'll eventually want to 'Query' an index to save read costs!)
+        response = table.scan()
+        items = response.get('Items', [])
+        
+        # Sort items by Timestamp (newest first)
+        items.sort(key=lambda x: x.get('Timestamp', ''), reverse=True)
+        
+        # Return the top 10 most recent events
+        return app.response_class(
+            response=json.dumps({"status": "ok", "events": items[:10]}, default=decimal_default),
+            status=200,
+            mimetype='application/json'
+        )
+    except Exception as e:
+        print(f"Error fetching events: {e}")
+        return jsonify({"error": str(e)}), 500
 
 @app.route("/set_logging_mode", methods=["POST"])
 def set_logging_mode():
@@ -24,6 +64,40 @@ def set_logging_mode():
     print(f"Logging mode updated: {LOG_ALL_MOTIONS}")
     return jsonify({"status": "ok", "log_all": LOG_ALL_MOTIONS})
 
+@app.route("/set_threshold", methods=["POST"])
+def set_threshold():
+    global MOTION_THRESHOLD
+    data = request.get_json()
+    if data is None or "threshold" not in data:
+        return jsonify({"error": "Missing threshold value"}), 400
+    threshold = int(data["threshold"])
+    threshold = max(50, min(400, threshold))
+    MOTION_THRESHOLD = threshold
+    return jsonify({"status": "ok", "motion_threshold": MOTION_THRESHOLD})
+
+@app.route("/get_threshold", methods=["GET"])
+def get_threshold():
+    return jsonify({"motion_threshold": MOTION_THRESHOLD})
+
+@app.route("/get_budget", methods=["GET"])
+def get_budget():
+    response = jsonify({
+        "spent": round(tracker.spent, 3),
+        "limit": tracker.limit,
+        "remaining": round(tracker.limit - tracker.spent, 3)
+    })
+    # This prevents the browser from caching the budget value
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    return response
+
+@app.route("/video_feed")
+def video_feed():
+    # This route returns the multipart stream to your Astro frontend
+    return Response(
+        generate_frames(), mimetype="multipart/x-mixed-replace; boundary=frame"
+    )
+
+# --- Classes ---
 class BudgetTracker:
     def __init__(self, limit=200.000):
         self.limit = limit
@@ -34,19 +108,16 @@ class BudgetTracker:
         self.spent += self.cost_per_upload
         return self.spent
 
+# --- Global Instantiations ---
 tracker = BudgetTracker(limit=200.000)
+uploader = CloudUploader()
 
 # Create imgs folder inside /code if it doesn't exist
 OUTPUT_DIR = os.path.join(os.getcwd(), "imgs")
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-# motion_detection code add-on
-from .cloud_uploader import CloudUploader
-
-uploader = CloudUploader()
-
-# 0 means default camera, 1 or 2 means external camera
-cap = cv2.VideoCapture(0)
+# 0 means default camera, 1 or 2 means external camera, string means video file
+cap = cv2.VideoCapture("test_video.mp4")
 
 # --- Background Subtractor (MOG2) ---
 fgbg = cv2.createBackgroundSubtractorMOG2(
@@ -75,23 +146,7 @@ UPLOAD_COOLDOWN = 0.015  # seconds between uploads
 last_upload_time = 0  # timestamp of last upload
 
 
-# ---- Threshold Endpoints ----
-@app.route("/set_threshold", methods=["POST"])
-def set_threshold():
-    global MOTION_THRESHOLD
-    data = request.get_json()
-    if data is None or "threshold" not in data:
-        return jsonify({"error": "Missing threshold value"}), 400
-    threshold = int(data["threshold"])
-    threshold = max(50, min(400, threshold))
-    MOTION_THRESHOLD = threshold
-    return jsonify({"status": "ok", "motion_threshold": MOTION_THRESHOLD})
-
-@app.route("/get_threshold", methods=["GET"])
-def get_threshold():
-    return jsonify({"motion_threshold": MOTION_THRESHOLD})
-
-
+# --- Core Logic ---
 def analyze_clips(frames):
     best_score = float("inf")
     best_frame = None
@@ -180,7 +235,9 @@ def generate_frames():
     while True:
         ret, frame = cap.read()
         if not ret:
-            break
+            # If the video ends, reset it to frame 0 and continue
+            cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
+            continue
 
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)  # converts the frames to be gray
         gray = cv2.GaussianBlur(gray, (21, 21), 0)  # blurs the frame
@@ -238,7 +295,7 @@ def generate_frames():
                 short_motion_saved = False
                 last_motion_time = None
 
-        # -----   RECORDING    -----
+        # -----   RECORDING   -----
         fg_mask = fgbg.apply(frame)
 
         if recording:
@@ -258,10 +315,10 @@ def generate_frames():
                     tracker.log_upload()
 
                     # TODO uncomment the AWS features
-                    # url = uploader.upload_frame(filename)
+                    # url = uploader.upload_frame(full_path)
                     # if url:
                     #     print(f"File live at: {url}")
-                    #     os.remove(filename)
+                    #     os.remove(full_path)
 
                 recording = False
                 motion_start_time = None
@@ -289,30 +346,8 @@ def generate_frames():
         # Yield the formatted image bytes to the web server
         yield (b"--frame\r\nContent-Type: image/jpeg\r\n\r\n" + frame_bytes + b"\r\n")
 
-
-# ---- Flask Endpoints ----
-@app.route("/video_feed")
-def video_feed():
-    # This route returns the multipart stream to your Astro frontend
-    return Response(
-        generate_frames(), mimetype="multipart/x-mixed-replace; boundary=frame"
-    )
-
-@app.route("/get_budget", methods=["GET"])
-def get_budget():
-    response = jsonify({
-        "spent": round(tracker.spent, 3),
-        "limit": tracker.limit,
-        "remaining": round(tracker.limit - tracker.spent, 3)
-    })
-    # This prevents the browser from caching the budget value
-    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    return response
-
 if __name__ == "__main__":
     print("Starting EdgeGuard Backend Server...")
     print("Live stream available at: http://127.0.0.1:5000/video_feed")
     # Setting debug=False is important here so the camera doesn't try to initialize twice
     app.run(host="0.0.0.0", port=5000, debug=False, threaded=True)
-
-

@@ -1,70 +1,72 @@
+// src/components/Event_Feed.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Event_Card from './Event_Card.jsx';
 
-const Event_Feed = () => {
-  const [events, setEvents] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null); // Added to track connection issues
+export default function Event_Feed() {
+    const [events, setEvents] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-  // The panel style
-  const panelStyle = {
-    backgroundColor: '#1a1d23',
-    border: '1px solid #2d333b',
-    borderRadius: '8px',
-    padding: '20px',
-    height: '90%',
-    display: 'flex',
-    flexDirection: 'column',
-    color: '#f0f6fc',
-    overflowY: 'auto'
-  };
+    // Fetch real data from your local Flask server
+    const fetchEvents = () => {
+        axios.get('http://127.0.0.1:5000/get_events')
+            .then(res => {
+                if (res.data && res.data.events) {
+                    setEvents(res.data.events);
+                }
+                setLoading(false);
+            })
+            .catch(err => {
+                console.error("Error fetching events:", err);
+                setLoading(false);
+            });
+    };
 
-  const fetchEvents = async () => {
-    try {
-      // TODO: Replace with Ethan's actual AWS API Gateway URL
-      const response = await axios.get('YOUR_AWS_API_GATEWAY_URL');
-      setEvents(response.data);
-      setError(null); 
-    } catch (error) {
-      console.error("Error fetching motion events:", error);
-      setError("Unable to connect to the event service.");
-    } finally {
-      // This ensures the "Loading..." text disappears regardless of success or failure
-      setLoading(false); 
-    }
-  };
+    useEffect(() => {
+        // Fetch immediately on load
+        fetchEvents();
+        
+        // Optional: Poll for new events every 10 seconds
+        const interval = setInterval(fetchEvents, 10000);
+        return () => clearInterval(interval);
+    }, []);
 
-  useEffect(() => {
-    fetchEvents();
-    // Non-functional Requirement: 10-second latency check
-    const interval = setInterval(fetchEvents, 10000);
-    return () => clearInterval(interval);
-  }, []);
+    return (
+        <div className="panel" style={styles.panel}>
+            <h2>Recent Events</h2>
+            {loading ? <p>Loading events...</p> : (
+                <ul style={styles.list}>
+                    {events.map(event => {
+                        // Grab the primary label to display
+                        const primaryLabel = event.Detected_Labels && event.Detected_Labels.length > 0 
+                            ? event.Detected_Labels[0] 
+                            : { Name: "Unknown", Confidence: 0 };
+                            
+                        // Format the timestamp nicely
+                        const timeString = new Date(event.Timestamp).toLocaleTimeString();
 
-  return (
-    <div style={panelStyle}>
-      <div style={{ borderBottom: '1px solid #2d333b', marginBottom: '20px', paddingBottom: '10px' }}>
-        <h3 style={{ margin: 0, fontSize: '1.2rem' }}>Recent Detections</h3>
-      </div>
+                        // Convert S3 URI (s3://bucket/key) to a public HTTPS URL if needed
+                        // Note: Your bucket needs to be public, or you need to generate presigned URLs in Flask
+                        const imgUrl = event.S3_URL.replace("s3://", "https://s3.us-west-2.amazonaws.com/");
 
-      <div className="feed-content">
-        {loading ? (
-          <p style={{ color: '#8b949e' }}>Loading motion events...</p>
-        ) : error ? (
-          <p style={{ color: '#f85149' }}>{error}</p>
-        ) : events.length === 0 ? (
-          <p style={{ color: '#8b949e' }}>No recent motion detected.</p>
-        ) : (
-          <div style={{ display: 'grid', gap: '15px' }}>
-            {events.map((event) => (
-              <Event_Card key={event.EventID} event={event} />
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
-  );
+                        return (
+                            <li key={event.EventID} style={styles.card}>
+                                <img src={imgUrl} alt="Detection" style={styles.thumbnail} />
+                                <div>
+                                    <strong>{primaryLabel.Name} ({Math.round(primaryLabel.Confidence)}%)</strong>
+                                    <p style={{margin: 0, fontSize: '0.85rem', color: '#888'}}>{timeString}</p>
+                                </div>
+                            </li>
+                        );
+                    })}
+                </ul>
+            )}
+        </div>
+    );
+}
+
+const styles = {
+    panel: { background: '#1a1d24', padding: '1rem', borderRadius: '8px', border: '1px solid #2a2d34', overflowY: 'auto', height: '100%' },
+    list: { listStyleType: 'none', padding: 0, margin: 0 },
+    card: { display: 'flex', gap: '1rem', padding: '0.5rem', borderBottom: '1px solid #2a2d34', alignItems: 'center' },
+    thumbnail: { width: '50px', height: '50px', borderRadius: '4px', objectFit: 'cover', background: '#0f1116' }
 };
-
-export default Event_Feed;
