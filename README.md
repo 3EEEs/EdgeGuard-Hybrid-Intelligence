@@ -161,7 +161,7 @@ cd edge-client
     ```bash 
     python -m venv env 
     ```
-  - **Run Environment:**
+  - **Start Environment:**
     
     ```bash 
     ./env/Scripts/activate
@@ -173,13 +173,21 @@ cd edge-client
     ```bash 
     python3 -m venv env
     ```
-  - **Run Envrionment:**
+  - **Start Envrionment:**
     
     ```bash 
     source env/bin/activate
     ```
 
-### Local Edge (Python)
+### Run Front and backend togther
+
+```bash
+python run_project.py
+```
+
+Then open your browser and navigate to http://localhost:4321 to view the dashboard.
+
+# If that doesn't work check these steps to see missing dependencies
 1. Ensure Python 3.10+ is installed.
 2. Install required packages:
    
@@ -191,7 +199,7 @@ pip install -r src/requirements.txt
 npm install
  ```
 
-### Then in two seperate terminals run the frontend and the backend
+## And if you want to run them independently or start them seperately
 
 To see the full system work, you need to run the web dashboard and the edge camera script simultaneously.
 
@@ -201,7 +209,7 @@ cd edgeguard-frontend
 npm run dev
 ```
 
-2. Run the backend in the main directory
+2. Run the backend in the main directory on a different terminal
 ```bash
 python -m src.motion_detection
 ```
