@@ -59,7 +59,7 @@ const Filter_Control = ({ onFilterChange }) => {
   return (
     <div style={panelStyle}>
       <div style={headerStyle}>
-        <h3 style={{ margin: 0, fontSize: '1.2rem' }}>Edge Logic Control</h3>
+        <h3 style={{ margin: 0, fontSize: '1.2rem' }}>Sensitivity Slider and Filter Menu</h3>
         <span style={{ fontSize: '0.75rem', color: statusColor }}>{statusLabel}</span>
       </div>
 
