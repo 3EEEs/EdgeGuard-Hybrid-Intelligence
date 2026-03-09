@@ -185,6 +185,8 @@ cd edge-client
 python run_project.py
 ```
 
+Then open your browser and navigate to http://localhost:4321 to view the dashboard.
+
 # If that doesn't work check these steps to see missing dependencies
 1. Ensure Python 3.10+ is installed.
 2. Install required packages:
