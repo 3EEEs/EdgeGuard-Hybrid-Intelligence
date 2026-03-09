@@ -7,6 +7,18 @@ import numpy as np
 from flask import Flask, Response, request, jsonify
 from flask_cors import CORS
 
+class BudgetTracker:
+    def __init__(self, limit=200.000):
+        self.limit = limit
+        self.spent = 0.000  # Starting point
+        self.cost_per_upload = 0.001 
+
+    def log_upload(self):
+        self.spent += self.cost_per_upload
+        return self.spent
+
+tracker = BudgetTracker(limit=200.000)
+
 # Flask Setup
 app = Flask(__name__)
 CORS(app)
@@ -226,6 +238,8 @@ def generate_frames():
                     cv2.imwrite(full_path, best_frame)
                     print(f"Best frame saved locally: {filename}")
 
+                    tracker.log_upload()
+
                     # TODO uncomment the AWS features
                     # url = uploader.upload_frame(filename)
                     # if url:
@@ -267,9 +281,21 @@ def video_feed():
         generate_frames(), mimetype="multipart/x-mixed-replace; boundary=frame"
     )
 
+@app.route("/get_budget", methods=["GET"])
+def get_budget():
+    response = jsonify({
+        "spent": round(tracker.spent, 3),
+        "limit": tracker.limit,
+        "remaining": round(tracker.limit - tracker.spent, 3)
+    })
+    # This prevents the browser from caching the budget value
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    return response
 
 if __name__ == "__main__":
     print("Starting EdgeGuard Backend Server...")
     print("Live stream available at: http://127.0.0.1:5000/video_feed")
     # Setting debug=False is important here so the camera doesn't try to initialize twice
     app.run(host="0.0.0.0", port=5000, debug=False, threaded=True)
+
+
