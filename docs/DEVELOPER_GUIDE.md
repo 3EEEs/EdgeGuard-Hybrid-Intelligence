@@ -52,8 +52,8 @@ EdgeGuard-Hybrid-Intelligence/
 ├── docs/                   # Developer & User documentation
 ├── reports/                # Weekly progress reports
 ├── tests/                  # Unit and integration tests
-├── edgeguard-frontend      # Frontend code for web dashboard
-├── node_modules            # Contains json files for python to run node
+├── edgeguard-frontend/      # Frontend code for web dashboard
+├── node_modules/            # Contains json files for python to run node
 ├── LIVINGDOC.md            # Project proposal & living document
 └── README.md               # Overview, installation, quick start
 
@@ -208,6 +208,7 @@ Tag the Release: Create a release tag in GitHub (e.g., v1.0.0-beta) summarizing 
 Commit this to your `main` branch and you can check off the "Developer Documentation" requirement for the assignment! 
 
 You have less than two hours left. Would you like me to draft up the `docs/USER_MANUAL.m
+
 
 
 
