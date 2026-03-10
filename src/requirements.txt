@@ -6,6 +6,8 @@ pytest
 psutil
 axios
 
+flake8
+
 # Web Server & API
 flask
 flask-cors 

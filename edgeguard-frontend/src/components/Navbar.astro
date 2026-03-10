@@ -1,14 +1,12 @@
 <nav class="navbar">
   <div class="logo">
     <img src="/EdgeGuard_Logo.png" alt="EdgeGuard Logo" />
-    <span>EdgeGuard</span>
+    <!-- <span>EdgeGuard</span> -->
   </div>
 
   <ul>
-    <li>Dashboard</li>
-    <li>Archive</li>
-    <li>System Settings</li>
-    <li>Security Logs</li>
+    <li><a href="/">Dashboard</a></li>
+    <li><a href="/motion_detected">Motion Detected</a></li>
   </ul>
 </nav>
 
@@ -33,7 +31,7 @@
 
   /* FIXED: logo is now small and appropriate for a navbar */
   .logo img {
-    height: 28px;   /* was 200px */
+    height: 180px; /* was 200px */
     width: auto;
   }
 
@@ -45,13 +43,15 @@
     margin: 0;
   }
 
-  li {
-    cursor: pointer;
+  li a {
+    text-decoration: none; /* Removes the underline */
+    color: inherit; /* Takes the white/light color from the navbar */
+    display: inline-block; /* Makes the whole area clickable */
     opacity: 0.8;
+    transition: opacity 0.2s ease;
   }
 
   li:hover {
     opacity: 1;
   }
 </style>
-
