@@ -21,9 +21,7 @@ const Event_Feed = () => {
 
   const fetchEvents = async () => {
     try {
-      const response = await axios.get(
-        "https://mrprmdah63.execute-api.us-west-2.amazonaws.com/events",
-      );
+      const response = await axios.get("placeholder");
 
       if (Array.isArray(response.data)) {
         const sortedData = response.data.sort(
