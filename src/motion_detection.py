@@ -181,6 +181,7 @@ def generate_frames():
         ret, frame = cap.read()
         if not ret:
             break
+        motion_duration = 0
 
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)  # converts the frames to be gray
         gray = cv2.GaussianBlur(gray, (21, 21), 0)  # blurs the frame
@@ -192,7 +193,6 @@ def generate_frames():
         # grabs the difference between the frames
         frame_delta = cv2.absdiff(prev_gray, gray)
         thresh = cv2.threshold(frame_delta, 25, 255, cv2.THRESH_BINARY)[1]
-
         motion_pixels = np.sum(thresh > 0)
         current_time = time.time()
 
@@ -205,25 +205,35 @@ def generate_frames():
 
             motion_duration = current_time - motion_start_time
 
-            # SHORT MOTION
-            if (
-                MIN_MOTION_TIME <= motion_duration < SUSTAIN_TIME
-                and not short_motion_saved
-            ):
-                print("Short motion detected")
-                if LOG_ALL_MOTIONS:
-                    tracker.log_upload()
-                    # TODO add the aws section
-                    
-                filename = f"short_motion_{int(time.time())}.jpg"
-                full_path = os.path.join(OUTPUT_DIR, filename)
+        # SHORT MOTION
+        if (
+            MIN_MOTION_TIME <= motion_duration < SUSTAIN_TIME
+            and not short_motion_saved
+        ):
+            print("Short motion detected")
+            
+            # 1. Define the filename and path FIRST
+            filename = f"short_motion_{int(time.time())}.jpg"
+            full_path = os.path.join(OUTPUT_DIR, filename)
 
-                print("Saving frame to:", full_path)  # Debug confirmation
-                cv2.imwrite(full_path, frame)
-                short_motion_saved = True
+            # 2. Save the frame to your local imgs/ folder
+            print("Saving frame to:", full_path)
+            cv2.imwrite(full_path, frame)
+            short_motion_saved = True
+
+            # 3. Now that the file exists, BRIDGE to the cloud
+            if LOG_ALL_MOTIONS:
+                tracker.log_upload()
+                try:
+                    url = uploader.upload_frame(full_path)
+                    if url:
+                        print(f"Short motion live at: {url}")
+                except Exception as e:
+                    # Prevents the flask stream from crashing on AWS errors
+                    print(f"Cloud bridge failed (local copy saved): {e}")
 
             # SUSTAINED MOTION
-            elif motion_duration >= SUSTAIN_TIME and not recording:
+            if motion_duration >= SUSTAIN_TIME and not recording:
                 print("Sustained motion detected — recording clip")
                 recording = True
                 clip_frames = []
@@ -257,11 +267,10 @@ def generate_frames():
 
                     tracker.log_upload()
 
-                    # TODO uncomment the AWS features
-                    # url = uploader.upload_frame(filename)
-                    # if url:
-                    #     print(f"File live at: {url}")
-                    #     os.remove(filename)
+                    # --- BRIDGING TO AWS ---
+                    if url:
+                        print(f"File live at: {url}")
+                        os.remove(filename)
 
                 recording = False
                 motion_start_time = None

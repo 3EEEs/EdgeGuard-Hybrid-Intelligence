@@ -1,4 +1,4 @@
-//Cpoy of function currently in AWS Lamba
+#Cpoy of function currently in AWS Lamba
 
 import json
 import boto3
