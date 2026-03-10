@@ -98,14 +98,8 @@ To run this project locally, your machine must have the following installed:
 * **AWS CLI** (Configured with credentials provided by the team for beta testing)
 * A working webcam (built-in or USB)
 
-### 1. Build & Installation Instructions
-
-Because this is a hybrid architecture, you need to install dependencies for both the local edge client and the web frontend.
-
-**A. Edge Motion Client (Python)**
-Open your terminal and navigate to the edge client directory:
-cd edge-client
 # It is highly recommended to use a virtual environment
+### 1. Build & Installation Instructions
   
   #### Windows Powershell
   - **Create enviroment (optional):**
@@ -139,7 +133,7 @@ python run_project.py
 
 Then open your browser and navigate to http://localhost:4321 to view the dashboard.
 
-# If that doesn't work check these steps to see missing dependencies
+# If dependencies are not installed
 1. Ensure Python 3.10+ is installed.
 2. Install required packages:
    
@@ -151,22 +145,22 @@ pip install -r src/requirements.txt
 npm install
  ```
 
-## And if you want to run them independently or start them seperately
+## If you want to run them independently
 
-To see the full system work, you need to run the web dashboard and the edge camera script simultaneously.
+To see the full system work, you need to run the web dashboard and the edge camera script simultaneously on different terminals.
 
-1. run the front end
+1. **Terminal 1:** Run the frontend (start in the main folder)
 ```bash
 cd edgeguard-frontend
 npm run dev
 ```
 
-2. Run the backend in the main directory on a different terminal
+2. **Terminal 2:** Run the backend (start in the main folder)
 ```bash
 python -m src.motion_detection
 ```
 
-Open your browser and navigate to http://localhost:4321 to view the dashboard.
+To see the website after running the frontend navigate to http://localhost:4321
 
 
 #### Caution
@@ -175,6 +169,6 @@ Open your browser and navigate to http://localhost:4321 to view the dashboard.
   
 * If you have your computer connected to any outside cameras be aware if they are set to default
 
-* Likewise if you are on a mac the computer could connect to your phone and use that camera instead. If that's what you want, great, but just check what cameras you have connected if you aren't able to see through the camera that you thought you were going to
+* Likewise if you are on a mac the computer could connect to your phone and use that camera instead. This can be disallowed in the mac's settings, or can be used if you want to record through an iphone
 
 
