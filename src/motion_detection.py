@@ -175,7 +175,7 @@ def generate_frames():
     """
     global prev_gray, motion_start_time, short_motion_saved
     global recording, clip_frames, last_motion_time, record_start_time
-    global MOTION_THRESHOLD  # allows Flask endpoint updates to be seen here
+    global MOTION_THRESHOLD  # noqa: F824
 
     while True:
         ret, frame = cap.read()
