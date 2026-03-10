@@ -30,10 +30,17 @@ In order to use the EdgeGuard software, you must configure both your local envir
   cd ~/EdgeGuard-Hybrid-Intelligence/src
   ```
   2) **Initialize Virtual Environment**:
+  - **Linux/macOS:**
   ```bash
   python3 -m venv env
   source env/bin/activate
   ```
+  - **Windows:**
+  ```bash
+  python3 -m venv env
+  ./env/Scripts/activate
+  ```
+ 
   3) **Install Libraries**:
   ```bash
   pip install boto3 python-dotenv opencv-python numpy flask flask-cors
@@ -47,23 +54,16 @@ In order to use the EdgeGuard software, you must configure both your local envir
 
 ## How to Run the Software
 1) Activate the Environment: Ensure your virtual environment is active (source env/bin/activate
-2) Lanch the Motion Detection Engine:
+   
+2) Navigate to the Project Root :
+Ensure that you are in highest level of project directory
+
+3) Launch Web Dashboard Front End and BackEnd
    * Run the following command:
    ```bash
-   python3 motion_detection.py
+   python run_project.py
    ```
-3) System Operation:
-   * **Delta Window:** Displays the live mathematical difference between frames.
-   * **Camera Window:** Automatically displays the captured event when motion is detected.
-   * **Console Output:** Displays the S3 URL of the uploaded image (e.g., File live at: ```https://...```).
-4) Exit: Press the 'q' key while the camera window is focused to stop the program.
-
-## Work in Progress:
-As noted in the functional sections, the following features are currently under development
-  * **Background subtraction:** Not yet implemented in the main loop.
-  * **User UI:** Sensitivity sliders and zone-based filtering has not been implemented yet.
-  * **Dashboard:** Automated notifications and event filtering controls has not been implemented yet.
-  * **Automation:** A script to automatically compile all code and pre-reqs has not been implemented yet.
+   Then open your browser and navigate to http://localhost:4321 to view the dashboard.
 
 ## How to Use the Software
 
@@ -77,20 +77,20 @@ As noted in the functional sections, the following features are currently under 
   - The frame is uploaded to your AWS S3 bucket using the `CloudUploader` component.
   - Local copies are automatically deleted after successful upload.
 - Users can preview motion detection in the application window.
-- **Work in Progress:** User-adjustable sensitivity sliders and zone-based filtering are not fully implemented. Backgorund subtraction is not yet fully implemented.
+- User-adjustable sensitivity sliders and zone-based filtering . Background subtraction.
 
 ### Cloud Upload and Processing
 
 - Uploaded frames trigger AWS Lambda functions for further analysis.
 - Amazon Rekognition detects objects in the images and returns labels with confidence scores.
 - Metadata (timestamp, detected labels, confidence scores, priority, S3 URL) is stored in DynamoDB.
-- **Work in Progress:** Full integration with the dashboard and automated notifications are pending.
+- Full integration with the dashboard.
 
-### Web Dashboard (Upcoming)
+### Web Dashboard
 
 - The dashboard will display captured frames with labels, timestamps, and metadata.
 - Users will be able to filter events and review high-priority alerts.
-- **Work in Progress:** Event filtering controls, analytics, and alert notifications are still under development.
+- Event filtering control and analytics
 
 ### Notes
 - Ensure all prerequisites are installed
@@ -158,6 +158,12 @@ Thank you for helping improve **EdgeGuard Hybrid Intelligence**! To report a bug
 
 ## Known Bugs
 1. [motion_detection.py Fails to Upload Frame Due to NoneType Bucket in S3 Client] (https://github.com/3EEEs/EdgeGuard-Hybrid-Intelligence/issues/1)
+
+
+
+
+
+
 
 
 
