@@ -58,7 +58,7 @@ In order to use the EdgeGuard software, you must configure both your local envir
 2) Navigate to the Project Root :
 Ensure that you are in highest level of project directory
 
-3) Launch Web Dashboard Front End and BackEnd
+3) Launch Web Dashboard Front End and Back End
    * Run the following command:
    ```bash
    python run_project.py
@@ -158,6 +158,7 @@ Thank you for helping improve **EdgeGuard Hybrid Intelligence**! To report a bug
 
 ## Known Bugs
 1. [motion_detection.py Fails to Upload Frame Due to NoneType Bucket in S3 Client] (https://github.com/3EEEs/EdgeGuard-Hybrid-Intelligence/issues/1)
+
 
 
 
