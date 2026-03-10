@@ -158,7 +158,7 @@ To test the presentation layer:
 
 1. Navigate to the web application directory:
    ```bash
-   cd code/dashboard
+   cd edgeguard-frontend
    ```
 2. Run the frontend test suite (using Jest/React Testing Library):
    ```bash
@@ -184,7 +184,7 @@ Mocks: When testing AWS integration locally, use the moto library to mock boto3 
 Since EdgeGuard Hybrid Intelligence consists of an edge client, a cloud backend, and a web dashboard, releasing a new version requires a few coordinated steps. Currently, this process is manual.
 
 Pre-Release Tasks
-Update Version Numbers: Update the version number in code/VERSION.txt and inside the code/dashboard/package.json file.
+Update Version Numbers: Update the version number in code/VERSION.txt and inside the edgeguard-frontend/package.json file.
 
 Sanity Checks (End-to-End Test): Before tagging a release, a developer must perform a live system test:
 
@@ -200,7 +200,7 @@ Cloud Update: Package and deploy any updated Lambda functions or IAM permission 
 Dashboard Build: Compile the React application for production:
 
 ```bash
-   cd code/dashboard
+   cd edgeguard-frontend
    npm run build
    ```
 Tag the Release: Create a release tag in GitHub (e.g., v1.0.0-beta) summarizing the new features and bug fixes.
@@ -208,6 +208,7 @@ Tag the Release: Create a release tag in GitHub (e.g., v1.0.0-beta) summarizing 
 Commit this to your `main` branch and you can check off the "Developer Documentation" requirement for the assignment! 
 
 You have less than two hours left. Would you like me to draft up the `docs/USER_MANUAL.m
+
 
 
 
