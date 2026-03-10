@@ -90,7 +90,7 @@ pip install -r src/requirements.txt
 ```bash
 python run_project.py
 ```
-**Option B — Run frontend and backend in separate terminal**
+**Option B — Run frontend and backend in separate terminals**
 
 - Terminal 1 (frontend, start in the main folder):
   ```bash
@@ -223,6 +223,7 @@ Tag the Release: Create a release tag in GitHub (e.g., v1.0.0-beta) summarizing 
 Commit this to your `main` branch and you can check off the "Developer Documentation" requirement for the assignment! 
 
 You have less than two hours left. Would you like me to draft up the `docs/USER_MANUAL.m
+
 
 
 
