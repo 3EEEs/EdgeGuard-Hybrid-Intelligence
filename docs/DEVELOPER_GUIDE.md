@@ -89,18 +89,18 @@ pip install -r src/requirements.txt
      ```bash
      python run_project.py
      ```
-   *Then open your browser and navigate to http://localhost:4321 to view the dashboard
+   * Then open your browser and navigate to http://localhost:4321 to view the dashboard
 4. Running frontend and backend in seperate terminal:
- * Terminal 1: Run the frontend (start in the main folder)
+   * Terminal 1: Run the frontend (start in the main folder)
 ```bash
 cd edgeguard-frontend
 npm run dev
 ```
-* Terminal 2:* Run the backend (start in the main folder)
-```bash
-python -m src.motion_detection
-```
-* To see the website after running the frontend navigate to http://localhost:4321
+   * Terminal 2: Run the backend (start in the main folder)
+    ```bash
+    python -m src.motion_detection
+    ```
+  * To see the website after running the frontend navigate to http://localhost:4321
 
 ### Cloud Components (AWS)
 
@@ -221,6 +221,7 @@ Tag the Release: Create a release tag in GitHub (e.g., v1.0.0-beta) summarizing 
 Commit this to your `main` branch and you can check off the "Developer Documentation" requirement for the assignment! 
 
 You have less than two hours left. Would you like me to draft up the `docs/USER_MANUAL.m
+
 
 
 
