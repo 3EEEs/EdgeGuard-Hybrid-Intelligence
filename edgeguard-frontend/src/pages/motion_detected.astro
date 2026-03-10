@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar.astro";
 import StatusBar from "../components/StatusBar.astro";
 
 // We'll eventually create this component to show the AWS S3 captures
-import CloudGallery from "../components/CloudGallery.jsx";
+import Event_Feed from "../components/Event_Feed.jsx";
 ---
 
 <DashboardLayout title="EdgeGuard - Motion Detected">
@@ -16,7 +16,7 @@ import CloudGallery from "../components/CloudGallery.jsx";
         <h1>Cloud Captures</h1>
         <p>Viewing latest motion events stored in S3</p>
 
-        <CloudGallery client:load />
+        <Event_Feed client:load />
     </div>
 </DashboardLayout>
 
