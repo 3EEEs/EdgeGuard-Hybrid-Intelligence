@@ -1,4 +1,11 @@
 # It is highly recommended to use a virtual environment
+
+### Prerequisites
+To run this project locally, your machine must have the following installed:
+* **Python 3.10+**
+* **Node.js 18+**
+* A working webcam (built-in or USB)
+
 ### 1. Build & Installation Instructions
   
   Here are instructions on how to create and run an environment on either Windows Powershell or Linux. All of these are done in the main project folder.
