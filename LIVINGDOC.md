@@ -608,7 +608,7 @@ Goal: Final Documentation & Video Demo.
 * Event Dashboard: A web-based user interface that displays a list of recent detections, showing the timestamp, the image, and the tags returned by the AI.
 
 ## Reflections:
-- **Samuel Dressel**:
+- **Samuel Dressel**: I enjoy working on this project a lot. This project taught me that I need to get better at time management skills. I learned a new webframework called Astro. I also learned how to properly add an automated testing software to a project. I also learned how to cause a web framework to interact witha python program using react endpoints. I did a good job with showing to team meetings consistently and communicating with fellow team members. For future proejcts I need be better at keeping with reading documentation made by other team members, understadning what other team mmebers were working and being more independent in my work. As a group member, I also should have contributed more to the codebase and helped other with their code more.
 - **Michael Wilde**:
 - **Ethan Short**:
 - **Calvin Grabowski**: 
