@@ -1,6 +1,6 @@
 ### How to Setup the Software
-1.Make sure all prerequistes are installed and all installation task have been completed from the INSTALL.md.
-2. Make sure the environment is running:
+1.Make sure all prerequistes are installed and all installation task have been completed from the INSTALL.md
+2.Make sure the environment is running:
 - **Linux/MacOS:**
     ```bash 
     source env/bin/activate
