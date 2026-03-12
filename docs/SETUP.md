@@ -1,5 +1,6 @@
 ### How to Setup the Software
-1. Make sure the environment is running
+1.Make sure all prerequistes are installed and all installation task have been completed from the INSTALL.md
+2. Make sure the environment is running
    - **Linux/MacOS:**
     ```bash 
     source env/bin/activate
@@ -8,12 +9,11 @@
      ```bash 
     ./env/Scripts/activate
     ```
-
-2. Navigate to the root directory of the project
+3. Navigate to the root directory of the project
 ```bash
 cd ~/EdgeGuard-Hybrid-Intelligence
 ```
-3. Choose one of the following options:
+4. Choose one of the following options (Choose Option B if Option A is not working):
 
 **Option A — Run frontend and backend together**
 
