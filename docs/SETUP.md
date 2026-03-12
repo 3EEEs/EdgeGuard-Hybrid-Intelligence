@@ -11,7 +11,7 @@
 
 2. Navigate to the root directory of the project
 ```bash
-cd ~/EdgeGuard-Hybrid-Intelligence/
+cd ~/EdgeGuard-Hybrid-Intelligence
 ```
 3. Choose one of the following options:
 
