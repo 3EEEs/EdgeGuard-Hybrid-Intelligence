@@ -37,18 +37,21 @@ To run this project locally, your machine must have the following installed:
 
 After you have your environment set up, you only have to start the environment when you come back, you only create the environment when you intially need it for your own device.
 
-
-
 ### AWS setup
 
-# TODO::::
+Use these credentials in the Environment file below
+
+[File Name](subfolder/file.md)
 
 ### Environment File
 
-Due to security reasons we created an environment file that won't be pushed to github. This is because it costs money for 
+Due to security reasons we created an environment file that won't be pushed to github. Your environemt should be in the root folder and look like the below
 
-# TODO:::: ETHAN MAKE THE ENVIRONMENT FILE
-
+# EdgeGuard Beta Test Credentials (.env)
+AWS_ACCESS_KEY_ID=PASTE_TEST_KEY_HERE
+AWS_SECRET_ACCESS_KEY=PASTE_TEST_SECRET_HERE
+AWS_REGION=us-west-2
+S3_BUCKET_NAME=edgeguard-storage-short-992
 
 ---
 
