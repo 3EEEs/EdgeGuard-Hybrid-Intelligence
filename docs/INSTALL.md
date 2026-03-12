@@ -41,7 +41,7 @@ After you have your environment set up, you only have to start the environment w
 
 Use these credentials in the Environment file below
 
-[File Name](subfolder/file.md)
+[template.env](template.env)
 
 ### Environment File
 
