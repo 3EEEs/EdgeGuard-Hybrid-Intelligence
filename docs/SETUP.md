@@ -13,7 +13,7 @@
 ```bash
 cd ~/EdgeGuard-Hybrid-Intelligence/
 ```
-4. Choose one of the following options:
+3. Choose one of the following options:
 
 **Option A — Run frontend and backend together**
 
