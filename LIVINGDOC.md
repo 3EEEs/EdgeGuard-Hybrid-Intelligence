@@ -607,6 +607,28 @@ Goal: Final Documentation & Video Demo.
 * AI Analysis Service: A backend Lambda function that processes uploaded images via Amazon Rekognition and returns a list of detected labels (e.g., Person, Car, Pet).
 * Event Dashboard: A web-based user interface that displays a list of recent detections, showing the timestamp, the image, and the tags returned by the AI.
 
+## Midterm Feedback Summary
+1. AI Reliability & Accuracy (The "False Negative" Problem)
+The most frequent concern was the potential for "false negatives"—where the AI might misclassify a critical event as unimportant.
+* Missed Activity: Multiple peers asked what happens if the AI decides a motion is non-threatening (e.g., a person with malicious intent) and fails to save the clip.
+* Environmental Factors: Questions were raised regarding how the AI maintains accuracy during lighting changes or other difficult environmental conditions.
+* Testing Confidence: There is interest in how we will test and correct "confidence level" issues within the model to ensure high accuracy.
+2. Data Storage & Management
+If the system only saves what the AI deems "correct," there are concerns about the loss of data.
+* Temporary Buffers: A suggestion was made to implement a 6–12 hour temporary storage window so users can manually comb through footage if they suspect the AI missed something.
+* Storage Overflow: Concerns were raised about the long-term storage of reviewed clips and how to prevent the system from being overwhelmed by the sheer volume of data.
+* User Control: One peer asked if users would have the ability to manually download clips to their own devices.
+3. Security & Privacy
+Since the cameras are "constantly rolling," peers are looking for reassurance on data protection.
+* Hacking Risks: A specific question was asked about how the team will ensure hackers cannot use the system to spy on users through their own cameras.
+* Cost Optimization: Given that AI processing can be expensive, it was suggested that the team find ways to optimize the code to keep operating costs low.
+4. Use Case & Marketability
+There was some confusion regarding whether this is a security product or a nature-watching tool.
+* Target Audience: Peers asked if the system can be used for both security and wildlife watching, and if there will be specific settings or different marketing strategies for these two very different groups.
+
+## Response to Midterm Feedback Response
+In summary, the team resolved the midterm concerns by evolving EdgeGuard from a simple "save-or-delete" tool into a transparent, multi-layered system that balances AI automation with a manual safety net. To address the risk of "missed events," the architecture was updated to include a confidence-tagging system and edge buffering, ensuring that ambiguous footage is flagged for review rather than instantly discarded. Security and cost issues were mitigated by shifting the primary processing to the local level, using encrypted edge-to-cloud tunnels and trigger-based activation to minimize both hacker exposure and AWS operating costs. Finally, to bridge the gap between security and wildlife use cases, the team implemented a Visual Repository Map, providing users with a clear dashboard to track how the AI categorizes and stores their data, effectively turning a "black box" process into a user-controlled experience.
+
 ## Reflections:
 - **Samuel Dressel**: I enjoy working on this project a lot. This project taught me that I need to get better at time management skills. I learned a new webframework called Astro. I also learned how to properly add an automated testing software to a project. I also learned how to cause a web framework to interact witha python program using react endpoints. I did a good job with showing to team meetings consistently and communicating with fellow team members. For future proejcts I need be better at keeping with reading documentation made by other team members, understadning what other team mmebers were working and being more independent in my work. As a group member, I also should have contributed more to the codebase and helped other with their code more.
 - **Michael Wilde**:
