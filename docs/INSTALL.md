@@ -1,3 +1,21 @@
+# First clone the repository
+
+Here is a link to the [Repository](https://github.com/3EEEs/EdgeGuard-Hybrid-Intelligence/tree/main) if wanted.
+
+Go in a terminal or IDE terminal and clone the repository into the location you wish to have it
+
+```bash
+git clone git@github.com:3EEEs/EdgeGuard-Hybrid-Intelligence.git
+```
+
+Then enter the directory
+
+```bash
+cd .\EdgeGuard-Hybrid-Intelligence\
+```
+
+we will refer to this location as the main directory.
+
 # It is highly recommended to use a virtual environment
 
 ### Prerequisites
