@@ -61,7 +61,7 @@ npm install
 
 # Run Front and backend together
 
- ### Windows Powershell (Quickest Way)
+ ### Windows Powershell and Linux (if python is fully installed) (Quickest Way to run the software)
 
 * Everytime you want to run the project in **Windows** there is a python script that updates dependencies and then runs. This will take longer the first time it is ran, because it will be installing all the requirements
 
@@ -69,11 +69,11 @@ npm install
   python run_project.py
   ```
 
-To see the website after running the frontend navigate to http://localhost:4321
+To see the website after running the frontend navigate to http://localhost:4321 because it is hosted by the individual computer.
 
 ## Otherwise, if you are unable to run the program with run_project.py
 
-### To install dependencies independently
+### Install dependencies independently
 1. Ensure Python 3.10+ is installed.
 2. Install required packages:
    
@@ -100,7 +100,7 @@ npm run dev
 python -m src.motion_detection
 ```
 
-To see the website after running the frontend navigate to http://localhost:4321
+To see the website after running the frontend navigate to http://localhost:4321 because it is hosted by the individual computer.
 
 
 #### Caution
