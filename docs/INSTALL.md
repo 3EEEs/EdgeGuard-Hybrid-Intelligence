@@ -41,8 +41,6 @@ After you have your environment set up, you only have to start the environment w
 
 Use these credentials in the Environment file below
 
-[template.env](EdgeGuard-Hybrid-Intelligence/template.env)
-
 ### Environment File
 
 Due to security reasons we created an environment file that won't be pushed to github this is a read only file! Your environemt should be in the root folder and look like the below
