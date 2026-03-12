@@ -18,12 +18,12 @@ python run_project.py
 ```
 **Option B — Run frontend and backend in separate terminals**
 
-- Terminal 1 (frontend, start in the main folder):
+- Terminal 1 (frontend, start in the root directory):
   ```bash
   cd edgeguard-frontend
   npm run dev
   ```
-- Terminal 2 (backend, start in the main folder):
+- Terminal 2 (backend, start in the root directory):
   ```bash
   python -m src.motion_detection
   ```
