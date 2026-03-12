@@ -1,4 +1,4 @@
-### Local Edge (Python)
+### How to Setup the Software
 1. Make sure the environment is running
    - **Linux/MacOS:**
     ```bash 
