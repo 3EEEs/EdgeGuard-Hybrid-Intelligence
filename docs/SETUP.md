@@ -5,7 +5,7 @@
     ```bash 
     source env/bin/activate
     ```
-    - **Windows:**
+- **Windows:**
      ```bash 
     ./env/Scripts/activate
     ```
