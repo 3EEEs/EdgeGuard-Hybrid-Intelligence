@@ -205,6 +205,107 @@ This component represents the business logic execution triggered by events.
     * **`MetadataWriter`**:
         * *Responsibilities:* Formats the final event data object (Timestamp, S3 URL, Detected Labels, Confidence) and writes it to the Amazon DynamoDB table.
 
+#### Lambda FUnctions In AWS
+
+##### Edgegaurd_Process_Event
+```Python
+import json
+import boto3
+import uuid
+import urllib.parse
+from datetime import datetime
+from decimal import Decimal
+
+# Connect to AWS services
+s3 = boto3.client('s3')
+rekognition = boto3.client('rekognition')
+dynamodb = boto3.resource('dynamodb')
+
+# Lowercase 'g' to match your DynamoDB table
+table = dynamodb.Table('Edgeguard_Events') 
+
+def lambda_handler(event, context):
+    # 1. Get the image info from the upload event
+    bucket = event['Records'][0]['s3']['bucket']['name']
+    key = urllib.parse.unquote_plus(event['Records'][0]['s3']['object']['key'], encoding='utf-8')
+    
+    try:
+        print(f"Processing image: {key} from bucket: {bucket}")
+        
+        # 2. Send image to Amazon Rekognition
+        response = rekognition.detect_labels(
+            Image={'S3Object': {'Bucket': bucket, 'Name': key}},
+            MaxLabels=10,
+            MinConfidence=70
+        )
+        
+        # 3. Simplify the data and convert floats to Decimals
+        detected_labels = []
+        for label in response['Labels']:
+            detected_labels.append({
+                'Name': label['Name'],
+                'Confidence': Decimal(str(label['Confidence']))
+            })
+            
+        print(f"Found labels: {detected_labels}")
+        
+        # 4. Save to DynamoDB
+        event_id = str(uuid.uuid4())
+        timestamp = datetime.now().isoformat()
+        
+        table.put_item(
+            Item={
+                'EventID': event_id,
+                'Timestamp': timestamp,
+                'S3_URL': f"s3://{bucket}/{key}",
+                'Detected_Labels': detected_labels
+            }
+        )
+        
+        return {'statusCode': 200, 'body': json.dumps('Success')}
+        
+    except Exception as e:
+        print(e)
+        raise e
+```
+
+##### EdgeGuard-GetEvents
+```Python
+import json
+import boto3
+from decimal import Decimal
+
+dynamodb = boto3.resource('dynamodb')
+# Make sure this exactly matches your DynamoDB table name!
+table = dynamodb.Table('Edgeguard_Events') 
+
+def decimal_default(obj):
+    if isinstance(obj, Decimal):
+        return str(obj)
+    raise TypeError
+
+def lambda_handler(event, context):
+    try:
+        response = table.scan()
+        items = response.get('Items', [])
+        
+        return {
+            'statusCode': 200,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Content-Type',
+                'Access-Control-Allow-Methods': 'OPTIONS,GET'
+            },
+            'body': json.dumps(items, default=decimal_default)
+        }
+    except Exception as e:
+        print(e)
+        return {
+            'statusCode': 500,
+            'body': json.dumps('Error fetching data')
+        }
+```
+
 ### 2.3 Presentation Component (React/Web)
 This component fetches and displays the processed data to the user.
 
