@@ -41,8 +41,7 @@ After you have your environment set up, you only have to start the environment w
 
 Use these credentials in the Environment file below
 
-[template.env](EdgeGuard-Hybrid-Intelligence
-/template.env)
+[template.env](EdgeGuard-Hybrid-Intelligence/template.env)
 
 ### Environment File
 
