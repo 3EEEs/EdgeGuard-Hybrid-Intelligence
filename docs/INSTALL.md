@@ -47,7 +47,7 @@ Use these credentials in the Environment file below
 
 Due to security reasons we created an environment file that won't be pushed to github. Your environemt should be in the root folder and look like the below
 
-# EdgeGuard Beta Test Credentials (.env)
+#### EdgeGuard Beta Test Credentials (.env)
 AWS_ACCESS_KEY_ID=PASTE_TEST_KEY_HERE
 AWS_SECRET_ACCESS_KEY=PASTE_TEST_SECRET_HERE
 AWS_REGION=us-west-2
