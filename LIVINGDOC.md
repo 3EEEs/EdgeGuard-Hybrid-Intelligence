@@ -607,6 +607,12 @@ Goal: Final Documentation & Video Demo.
 * AI Analysis Service: A backend Lambda function that processes uploaded images via Amazon Rekognition and returns a list of detected labels (e.g., Person, Car, Pet).
 * Event Dashboard: A web-based user interface that displays a list of recent detections, showing the timestamp, the image, and the tags returned by the AI.
 
+## Reflections:
+- **Samuel Dressel**:
+- **Michael Wilde**:
+- **Ethan Short**:
+- **Calvin Grabowski**: 
+
 ## Stretch Goals
 * Cost-Savings Calculator: A visualization on the dashboard comparing "Estimated Cost if Full Streaming" vs. "Actual Cost with EdgeGuard," using live AWS pricing data.
 * SMS/Email Alerts: Integration with AWS SNS (Simple Notification Service) to text the user immediately when a specific "High Threat" object (e.g., a person at night) is confirmed by the cloud.
