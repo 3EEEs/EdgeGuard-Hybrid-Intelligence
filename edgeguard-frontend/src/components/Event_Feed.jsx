@@ -21,7 +21,7 @@ const Event_Feed = () => {
 
   const fetchEvents = async () => {
     try {
-      const response = await axios.get('https://{api-id}.execute-api.us-west-2.amazonaws.com/prod/events');
+      const response = await axios.get("https://mrprmdah63.execute-api.us-west-2.amazonaws.com/events");
 
       if (Array.isArray(response.data)) {
         const sortedData = response.data.sort(
