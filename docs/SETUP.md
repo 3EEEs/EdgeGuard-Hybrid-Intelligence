@@ -9,7 +9,11 @@
     ./env/Scripts/activate
     ```
 
-2. Navigate to the root directory of the project, then choose one of the following options:
+2. Navigate to the root directory of the project
+   ```bash
+  cd ~/EdgeGuard-Hybrid-Intelligence/
+  ```
+4. Choose one of the following options:
 
 **Option A — Run frontend and backend together**
 
